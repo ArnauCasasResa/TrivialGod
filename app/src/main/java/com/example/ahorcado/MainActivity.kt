@@ -31,7 +31,8 @@ class MainActivity : ComponentActivity() {
                         startDestination = Routes.SplashScreen.route
                     ) {
                         composable(Routes.SplashScreen.route) { SplashScreen(navigationController) }
-                        composable(Routes.MenuScreen.route) { MenuScreen() }
+                        composable(Routes.MenuScreen.route) { MenuScreen(navigationController) }
+                        composable(Routes.GameScreen.route) { GameScreen() }
                     }
                 }
             }
