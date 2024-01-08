@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-fun GameScreen(){
+fun GameScreen(navController: NavController){
     var numImagen by remember { mutableIntStateOf(0) }
     var palabrasJuego by remember { mutableStateOf(arrayOf("pan","mandarina","croqueta","pepe","caballo","perry")) }
     val abc by remember { mutableStateOf(arrayOf('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z') )}
@@ -109,7 +109,10 @@ fun GameScreen(){
             }
         }
         if (palabraEscondida==palabraEscogida){
-
+            navController.navigate(Routes.EndScreenGood.route)
+        }
+        if(imagen==R.drawable.fase6){
+            navController.navigate(Routes.EndScreenBad.route)
         }
     }
 }

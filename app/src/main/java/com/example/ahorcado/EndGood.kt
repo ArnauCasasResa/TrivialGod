@@ -21,12 +21,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.navigation.NavController
 
 
 @Composable
-fun MenuScreen(navController: NavController){
+fun EndScreenGood(){
     var show by remember { mutableStateOf(false) }
     Image(painter = painterResource(id = R.drawable.beix),
         contentDescription = "Fondo",
@@ -38,7 +36,7 @@ fun MenuScreen(navController: NavController){
         }
         Image(
             painter = painterResource(id = R.drawable.ahorcado),
-            contentDescription = "AHORCADO",
+            contentDescription = "IMC",
             modifier = Modifier.fillMaxWidth()
         )
         Box(modifier = Modifier
@@ -49,7 +47,7 @@ fun MenuScreen(navController: NavController){
                 .background(Color.Gray)
                 .width(125.dp)
                 .padding(1.dp)
-                .clickable { navController.navigate(Routes.GameScreen.route) }) {
+                .clickable {  }) {
                 Text(text = "Play",
                     modifier = Modifier.align(Alignment.Center),
                     color = Color.White)
@@ -73,23 +71,3 @@ fun MenuScreen(navController: NavController){
 
     }
 }
-
-@Composable
-fun MyDialog(show: Boolean, onDismiss: () -> Unit){
-    if(show){
-        Dialog(onDismissRequest = { onDismiss() }) {
-            Column(
-                Modifier
-                    .background(Color.White)
-                    .padding(24.dp)
-                    .fillMaxWidth()) {
-                Text(text = "Como se juega?")
-                Text(text = "\nEl objetivo del juego es adivinar la palabra con la unica pista que nos dan que es la cantidad de letras que contiene.")
-                Text(text = "Al elegir una letra, si en esa palabra esta la letra que hsa escogido se revelara la posicion y la cantidad(si esque esa letra esta repetida), posteriormente se descartara la letra")
-                Text(text = "Si no esta en la palabra se descartara la letra y se iniciara el dibujo del ahorcado, si el dibujo se completa y no consigue completar la palabra habras perdido.")
-
-            }
-        }
-    }
-}
-

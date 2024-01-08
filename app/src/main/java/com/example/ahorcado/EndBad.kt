@@ -21,12 +21,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.navigation.NavController
-
 
 @Composable
-fun EndScreen(navController: NavController){
+fun EndScreenBad(){
     var show by remember { mutableStateOf(false) }
     Image(painter = painterResource(id = R.drawable.beix),
         contentDescription = "Fondo",
