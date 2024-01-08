@@ -7,15 +7,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,7 +23,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -34,13 +30,23 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-fun GameScreen(navController: NavController){
+fun GameScreen(navController: NavController, selectedText: String){
+    val dificultad by remember{ mutableStateOf(selectedText)}
+    var win=false
     var numImagen by remember { mutableIntStateOf(0) }
-    var palabrasJuego by remember { mutableStateOf(arrayOf("pan","mandarina","croqueta","pepe","caballo","perry")) }
+    val palabrasFacil by remember { mutableStateOf(arrayOf("PAN","MANDARINA","CROQUETA","PEPE","CABALLO","PERRY"))}
+    val palabrasMedio by remember { mutableStateOf(arrayOf("ELEFANTE","GUITARRA","MARIPOSA","CEBRA","JIRAFA","PIRATA"))}
+    val palabrasDificil by remember { mutableStateOf(arrayOf("EQUINOCCIO","AJEDREZ","EXCEPCION","CRIPTOGRAFIA","QUIMERA","ESDRUJULA"))}
+    val palabrasJuego=when(dificultad){
+        "Easy"->palabrasFacil
+        "Mid"->palabrasMedio
+        else ->palabrasDificil
+    }
     val abc by remember { mutableStateOf(arrayOf('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z') )}
     var palabraRandom by remember {mutableIntStateOf((palabrasJuego.indices).random())}
-    var palabraEscogida by remember {mutableStateOf("PEPE")} //palabrasJuego[palabraRandom]
+    var palabraEscogida by remember {mutableStateOf(palabrasJuego[palabraRandom])}
     var palabraEscondida by remember { mutableStateOf("_".repeat(palabraEscogida.length))}
+
     var imagen = when(numImagen){
         0->R.drawable.fase0
         1->R.drawable.fase1
@@ -81,18 +87,18 @@ fun GameScreen(navController: NavController){
                         .border(width = 5.dp, color = Color.Gray, shape = RoundedCornerShape(4.dp))
                         .padding(4.dp)
                         .clickable {
-                            for (letra in palabraEscogida.indices){
-                                if (letrita==palabraEscogida[letra]){
-                                    siOno=true
+                            for (letra in palabraEscogida.indices) {
+                                if (letrita == palabraEscogida[letra]) {
+                                    siOno = true
                                     nuevaPalabraEscondida[letra] = letrita
                                 }
                             }
-                            palabraEscondida=String(nuevaPalabraEscondida)
-                            if (!siOno){
-                                colorCasilla=Color.Red
+                            palabraEscondida = String(nuevaPalabraEscondida)
+                            if (!siOno) {
+                                colorCasilla = Color.Red
                                 numImagen++
-                            }else{
-                                colorCasilla=Color.Green
+                            } else {
+                                colorCasilla = Color.Green
                             }
                         }){
 
@@ -109,10 +115,11 @@ fun GameScreen(navController: NavController){
             }
         }
         if (palabraEscondida==palabraEscogida){
-            navController.navigate(Routes.EndScreenGood.route)
-        }
-        if(imagen==R.drawable.fase6){
-            navController.navigate(Routes.EndScreenBad.route)
+            win=true
+            navController.navigate(Routes.EndScreen.createRoute(win))
+        }else if(imagen==R.drawable.fase6){
+
+            navController.navigate(Routes.EndScreen.createRoute(win))
         }
     }
 }

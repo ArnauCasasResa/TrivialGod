@@ -21,10 +21,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 
 
 @Composable
-fun EndScreen(){
+fun EndScreen(navController: NavController, win:Boolean){
     var show by remember { mutableStateOf(false) }
     Image(painter = painterResource(id = R.drawable.beix),
         contentDescription = "Fondo",
@@ -36,19 +37,25 @@ fun EndScreen(){
         }
         Image(
             painter = painterResource(id = R.drawable.ahorcado),
-            contentDescription = "IMC",
+            contentDescription = "Ahogado",
             modifier = Modifier.fillMaxWidth()
         )
         Box(modifier = Modifier
             .height(20.dp)) {
         }
         Column(modifier = Modifier.padding(10.dp)) {
+            if (!win){
+                Text(text = "Has perdido :(, quieres jugar otra vez?")
+            }else{
+                Text(text = "Has ganado :), quieres jugar otra vez?")
+            }
+
             Box(modifier = Modifier
                 .background(Color.Gray)
                 .width(125.dp)
                 .padding(1.dp)
-                .clickable {  }) {
-                Text(text = "Play",
+                .clickable { navController.navigate(Routes.MenuScreen.route)}) {
+                Text(text = "Menu",
                     modifier = Modifier.align(Alignment.Center),
                     color = Color.White)
             }
