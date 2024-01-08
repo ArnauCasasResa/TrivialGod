@@ -33,8 +33,7 @@ class MainActivity : ComponentActivity() {
                         composable(Routes.SplashScreen.route) { SplashScreen(navigationController) }
                         composable(Routes.MenuScreen.route) { MenuScreen(navigationController) }
                         composable(Routes.GameScreen.route) { GameScreen(navigationController) }
-                        composable(Routes.EndScreenGood.route) { EndScreenGood() }
-                        composable(Routes.EndScreenBad.route) { EndScreenBad() }
+                        composable(Routes.EndScreen.route) { EndScreen() }
                     }
                 }
             }

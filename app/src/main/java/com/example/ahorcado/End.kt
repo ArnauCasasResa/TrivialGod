@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun EndScreenGood(){
+fun EndScreen(){
     var show by remember { mutableStateOf(false) }
     Image(painter = painterResource(id = R.drawable.beix),
         contentDescription = "Fondo",
