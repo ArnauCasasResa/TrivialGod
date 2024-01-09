@@ -25,8 +25,7 @@ import androidx.navigation.NavController
 
 
 @Composable
-fun EndScreen(navController: NavController, win:Boolean){
-    var show by remember { mutableStateOf(false) }
+fun EndScreen(navController: NavController, win:Boolean, tries:Int){
     Image(painter = painterResource(id = R.drawable.beix),
         contentDescription = "Fondo",
         Modifier.fillMaxWidth(),
@@ -44,17 +43,19 @@ fun EndScreen(navController: NavController, win:Boolean){
             .height(20.dp)) {
         }
         Column(modifier = Modifier.padding(10.dp)) {
-            if (!win){
-                Text(text = "Has perdido :(, quieres jugar otra vez?")
-            }else{
-                Text(text = "Has ganado :), quieres jugar otra vez?")
+            Box(modifier = Modifier.padding(2.dp)){
+                if (!win){
+                    Text(text = "Has perdido :(, quieres jugar otra vez?",
+                        modifier = Modifier.align(Alignment.Center))
+                }else{
+                    Text(text = "Has ganado :) con $tries intentos, quieres jugar otra vez?")
+                }
             }
-
             Box(modifier = Modifier
                 .background(Color.Gray)
                 .width(125.dp)
                 .padding(1.dp)
-                .clickable { navController.navigate(Routes.MenuScreen.route)}) {
+                .clickable { navController.navigate(Routes.MenuScreen.route) }) {
                 Text(text = "Menu",
                     modifier = Modifier.align(Alignment.Center),
                     color = Color.White)
@@ -66,13 +67,10 @@ fun EndScreen(navController: NavController, win:Boolean){
                 .background(Color.Gray)
                 .width(125.dp)
                 .padding(1.dp)
-                .clickable {
-                    show = true
-                }) {
-                Text(text = "Help",
+                .clickable { navController.navigate(Routes.GameScreen.route) }) {
+                Text(text = "Play Again",
                     modifier = Modifier.align(Alignment.Center),
                     color = Color.White)
-                MyDialog(show,{ show = false })
             }
         }
 

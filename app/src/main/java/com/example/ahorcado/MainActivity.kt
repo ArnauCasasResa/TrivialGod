@@ -36,8 +36,11 @@ class MainActivity : ComponentActivity() {
                         composable(Routes.MenuScreen.route) { MenuScreen(navigationController) }
                         composable(Routes.GameScreen.route, arguments = listOf(navArgument("dificultad"){type= NavType.StringType}))
                             {backStackEntry -> GameScreen(navigationController,backStackEntry.arguments?.getString("dificultad")?:"dificil") }
-                        composable(Routes.EndScreen.route,arguments = listOf(navArgument("win") {type = NavType.BoolType}))
-                        {backStackEntry -> EndScreen(navigationController,backStackEntry.arguments?.getBoolean("win") ?: false) }
+                        composable(Routes.EndScreen.route,arguments = listOf(navArgument("win") {type = NavType.BoolType},
+                            navArgument("tries"){type= NavType.IntType}))
+                        {backStackEntry -> EndScreen(navigationController,
+                            backStackEntry.arguments?.getBoolean("win") ?: false,
+                            backStackEntry.arguments?.getInt("tries")?:0) }
                     }
                 }
             }

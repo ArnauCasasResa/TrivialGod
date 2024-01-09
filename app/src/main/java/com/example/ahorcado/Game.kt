@@ -33,16 +33,17 @@ import androidx.navigation.NavController
 fun GameScreen(navController: NavController, selectedText: String){
     val dificultad by remember{ mutableStateOf(selectedText)}
     var win=false
+    var tries by remember{ mutableIntStateOf(0)}
     var numImagen by remember { mutableIntStateOf(0) }
-    val palabrasFacil by remember { mutableStateOf(arrayOf("PAN","MANDARINA","CROQUETA","PEPE","CABALLO","PERRY"))}
-    val palabrasMedio by remember { mutableStateOf(arrayOf("ELEFANTE","GUITARRA","MARIPOSA","CEBRA","JIRAFA","PIRATA"))}
+    val palabrasFacil by remember { mutableStateOf(arrayOf("PAN","CROQUETA","PEPE","CABALLO","CEBRA","PERRY"))}
+    val palabrasMedio by remember { mutableStateOf(arrayOf("ELEFANTE","GUITARRA","MARIPOSA","MANDARINA","JIRAFA","PIRATA"))}
     val palabrasDificil by remember { mutableStateOf(arrayOf("EQUINOCCIO","AJEDREZ","EXCEPCION","CRIPTOGRAFIA","QUIMERA","ESDRUJULA"))}
     val palabrasJuego=when(dificultad){
         "Easy"->palabrasFacil
-        "Mid"->palabrasMedio
+        "Normal"->palabrasMedio
         else ->palabrasDificil
     }
-    val abc by remember { mutableStateOf(arrayOf('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z') )}
+    val abc by remember { mutableStateOf(arrayOf('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'))}
     var palabraRandom by remember {mutableIntStateOf((palabrasJuego.indices).random())}
     var palabraEscogida by remember {mutableStateOf(palabrasJuego[palabraRandom])}
     var palabraEscondida by remember { mutableStateOf("_".repeat(palabraEscogida.length))}
@@ -72,12 +73,12 @@ fun GameScreen(navController: NavController, selectedText: String){
         var inici =0
         var final =5
         var nuevaPalabraEscondida=palabraEscondida.toCharArray()
-        var nuevaPalabraEscogida=palabraEscogida.uppercase().toCharArray()
         repeat(6){
             Row {
                 for (i in inici..final){
                     var siOno=false
                     var letrita=abc[i]
+                    var botonHabilitado by remember { mutableStateOf(true)}
                     var colorCasilla by remember { mutableStateOf(Color.White)}
                     Box(modifier = Modifier
                         .padding(3.dp)
@@ -87,18 +88,22 @@ fun GameScreen(navController: NavController, selectedText: String){
                         .border(width = 5.dp, color = Color.Gray, shape = RoundedCornerShape(4.dp))
                         .padding(4.dp)
                         .clickable {
-                            for (letra in palabraEscogida.indices) {
-                                if (letrita == palabraEscogida[letra]) {
-                                    siOno = true
-                                    nuevaPalabraEscondida[letra] = letrita
+                            if (botonHabilitado) {
+                                for (letra in palabraEscogida.indices) {
+                                    if (letrita == palabraEscogida[letra]) {
+                                        siOno = true
+                                        nuevaPalabraEscondida[letra] = letrita
+                                    }
                                 }
-                            }
-                            palabraEscondida = String(nuevaPalabraEscondida)
-                            if (!siOno) {
-                                colorCasilla = Color.Red
-                                numImagen++
-                            } else {
-                                colorCasilla = Color.Green
+                                botonHabilitado = false
+                                palabraEscondida = String(nuevaPalabraEscondida)
+                                if (!siOno) {
+                                    colorCasilla = Color.Red
+                                    numImagen++
+                                    tries++
+                                } else {
+                                    colorCasilla = Color.Green
+                                }
                             }
                         }){
 
@@ -116,10 +121,9 @@ fun GameScreen(navController: NavController, selectedText: String){
         }
         if (palabraEscondida==palabraEscogida){
             win=true
-            navController.navigate(Routes.EndScreen.createRoute(win))
+            navController.navigate(Routes.EndScreen.createRoute(win, tries))
         }else if(imagen==R.drawable.fase6){
-
-            navController.navigate(Routes.EndScreen.createRoute(win))
+            navController.navigate(Routes.EndScreen.createRoute(win, tries))
         }
     }
 }
