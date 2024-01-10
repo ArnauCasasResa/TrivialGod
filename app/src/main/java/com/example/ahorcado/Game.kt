@@ -3,6 +3,7 @@ package com.example.ahorcado
 import android.annotation.SuppressLint
 import android.content.Context
 import android.media.MediaPlayer
+import android.provider.MediaStore.Audio.Media
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -39,6 +40,8 @@ fun GameScreen(navController: NavController, selectedText: String){
     val dificultad by remember{ mutableStateOf(selectedText)}
 
     var win=false
+    val audioWin=MediaPlayer.create(LocalContext.current,R.raw.win)
+    val audioLose=MediaPlayer.create(LocalContext.current,R.raw.lose)
     val audioCorrecto:MediaPlayer=MediaPlayer.create(LocalContext.current,R.raw.correct)
     val audioFallo:MediaPlayer=MediaPlayer.create(LocalContext.current,R.raw.fail)
     var tries by remember{ mutableIntStateOf(0)}
@@ -131,9 +134,10 @@ fun GameScreen(navController: NavController, selectedText: String){
         }
         if (palabraEscondida==palabraEscogida){
             win=true
+            audioWin.start()
             navController.navigate(Routes.EndScreen.createRoute(win, tries))
         }else if(imagen==R.drawable.fase6){
-
+            audioLose
             navController.navigate(Routes.EndScreen.createRoute(win, tries))
         }
     }
