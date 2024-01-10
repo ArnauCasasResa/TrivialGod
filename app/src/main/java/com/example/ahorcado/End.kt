@@ -24,11 +24,6 @@ import androidx.navigation.NavController
 
 @Composable
 fun EndScreen(navController: NavController, win:Boolean, tries:Int){
-    val audioWin: MediaPlayer = MediaPlayer.create(LocalContext.current,R.raw.win)
-    val audioLose: MediaPlayer = MediaPlayer.create(LocalContext.current,R.raw.lose)
-    if (win){
-        audioWin.start()
-    }else audioLose.start()
     Image(painter = painterResource(id = R.drawable.beix),
         contentDescription = "Fondo",
         Modifier.fillMaxWidth(),

@@ -37,6 +37,7 @@ import androidx.navigation.NavController
 @Composable
 fun GameScreen(navController: NavController, selectedText: String){
     val dificultad by remember{ mutableStateOf(selectedText)}
+
     var win=false
     val audioCorrecto:MediaPlayer=MediaPlayer.create(LocalContext.current,R.raw.correct)
     val audioFallo:MediaPlayer=MediaPlayer.create(LocalContext.current,R.raw.fail)
@@ -132,7 +133,9 @@ fun GameScreen(navController: NavController, selectedText: String){
             win=true
             navController.navigate(Routes.EndScreen.createRoute(win, tries))
         }else if(imagen==R.drawable.fase6){
+
             navController.navigate(Routes.EndScreen.createRoute(win, tries))
         }
     }
 }
+
