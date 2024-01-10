@@ -30,25 +30,36 @@ fun EndScreen(navController: NavController, win:Boolean, tries:Int){
         contentDescription = "Fondo",
         Modifier.fillMaxWidth(),
         contentScale = ContentScale.FillBounds)
-    Column(modifier = Modifier.padding(20.dp),horizontalAlignment = Alignment.CenterHorizontally){
-        Box(modifier = Modifier
-            .height(100.dp)) {
+    Column(modifier = Modifier.padding(20.dp),horizontalAlignment = Alignment.CenterHorizontally) {
+        Box(
+            modifier = Modifier
+                .height(100.dp)
+        ) {
         }
         Image(
             painter = painterResource(id = R.drawable.ahorcado),
             contentDescription = "Ahogado",
             modifier = Modifier.fillMaxWidth()
         )
-        Box(modifier = Modifier
-            .height(20.dp)) {
+        Box(
+            modifier = Modifier
+                .height(20.dp)
+        ) {
         }
         Column(modifier = Modifier.padding(10.dp)) {
-            Box(modifier = Modifier.padding(2.dp)){
-                if (!win){
-                    Text(text = "Has perdido :(, quieres jugar otra vez?",
-                        modifier = Modifier.align(Alignment.Center))
-                }else{
-                    Text(text = "Has ganado :) con $tries intentos, quieres jugar otra vez?")
+            Box(modifier = Modifier.padding(2.dp)) {
+                if (!win) {
+                    Text(
+                        text = "Has perdido :(, quieres jugar otra vez?",
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                } else {
+                    if (tries == 0) {
+                        Text(text = "Has ganado :) , quieres jugar otra vez?")
+                    } else {
+                        Text(text = "Has ganado :) con $tries intentos, quieres jugar otra vez?")
+                    }
+
                 }
             }
             Box(modifier = Modifier
@@ -56,21 +67,27 @@ fun EndScreen(navController: NavController, win:Boolean, tries:Int){
                 .width(125.dp)
                 .padding(1.dp)
                 .clickable { navController.navigate(Routes.MenuScreen.route) }) {
-                Text(text = "Menu",
+                Text(
+                    text = "Menu",
                     modifier = Modifier.align(Alignment.Center),
-                    color = Color.White)
+                    color = Color.White
+                )
             }
-            Box(modifier = Modifier
-                .height(15.dp)) {
+            Box(
+                modifier = Modifier
+                    .height(15.dp)
+            ) {
             }
             Box(modifier = Modifier
                 .background(Color.Gray)
                 .width(125.dp)
                 .padding(1.dp)
                 .clickable { navController.navigate(Routes.GameScreen.route) }) {
-                Text(text = "Play Again",
+                Text(
+                    text = "Play Again",
                     modifier = Modifier.align(Alignment.Center),
-                    color = Color.White)
+                    color = Color.White
+                )
             }
         }
 
