@@ -137,7 +137,7 @@ fun GameScreen(navController: NavController, selectedText: String){
             audioWin.start()
             navController.navigate(Routes.EndScreen.createRoute(win, tries))
         }else if(imagen==R.drawable.fase6){
-            audioLose
+            audioLose.start()
             navController.navigate(Routes.EndScreen.createRoute(win, tries))
         }
     }
