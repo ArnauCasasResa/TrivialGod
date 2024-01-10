@@ -90,7 +90,7 @@ fun MenuScreen(navController: NavController){
                 readOnly = true,
                 modifier = Modifier
                     .clickable { expanded = true }
-                    .width(125.dp).background(color = Color.White)
+                    .width(125.dp).background(color = Color.LightGray)
             )
             DropdownMenu(
                 expanded = expanded,
@@ -99,6 +99,7 @@ fun MenuScreen(navController: NavController){
             ) {
                 hobbies.forEach { hobby ->
                     DropdownMenuItem(text = { Text(text = hobby) },
+                        modifier = Modifier.background(color=Color.LightGray),
                         onClick = {
                             expanded = false
                             selectedText = hobby

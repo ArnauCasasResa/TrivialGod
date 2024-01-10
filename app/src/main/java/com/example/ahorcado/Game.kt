@@ -40,8 +40,6 @@ fun GameScreen(navController: NavController, selectedText: String){
     var win=false
     val audioCorrecto:MediaPlayer=MediaPlayer.create(LocalContext.current,R.raw.correct)
     val audioFallo:MediaPlayer=MediaPlayer.create(LocalContext.current,R.raw.fail)
-    val audioWin:MediaPlayer=MediaPlayer.create(LocalContext.current,R.raw.win)
-    val audioLose:MediaPlayer=MediaPlayer.create(LocalContext.current,R.raw.lose)
     var tries by remember{ mutableIntStateOf(0)}
     var numImagen by remember { mutableIntStateOf(0) }
     val palabrasFacil by remember { mutableStateOf(arrayOf("PAN","CROQUETA","PEPE","CABALLO","CEBRA","PERRY"))}
@@ -132,10 +130,8 @@ fun GameScreen(navController: NavController, selectedText: String){
         }
         if (palabraEscondida==palabraEscogida){
             win=true
-            audioWin.start()
             navController.navigate(Routes.EndScreen.createRoute(win, tries))
         }else if(imagen==R.drawable.fase6){
-            audioLose.start()
             navController.navigate(Routes.EndScreen.createRoute(win, tries))
         }
     }

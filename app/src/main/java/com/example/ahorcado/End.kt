@@ -1,5 +1,6 @@
 package com.example.ahorcado
 
+import android.media.MediaPlayer
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -11,14 +12,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -26,6 +24,8 @@ import androidx.navigation.NavController
 
 @Composable
 fun EndScreen(navController: NavController, win:Boolean, tries:Int){
+    val audioWin: MediaPlayer = MediaPlayer.create(LocalContext.current,R.raw.win)
+    val audioLose: MediaPlayer = MediaPlayer.create(LocalContext.current,R.raw.lose)
     Image(painter = painterResource(id = R.drawable.beix),
         contentDescription = "Fondo",
         Modifier.fillMaxWidth(),
@@ -49,15 +49,22 @@ fun EndScreen(navController: NavController, win:Boolean, tries:Int){
         Column(modifier = Modifier.padding(10.dp)) {
             Box(modifier = Modifier.padding(2.dp)) {
                 if (!win) {
+                    if (!audioLose.isPlaying){
+                        audioLose.start()
+                    }
                     Text(
                         text = "Has perdido :(, quieres jugar otra vez?",
                         modifier = Modifier.align(Alignment.Center)
                     )
                 } else {
+                    if (!audioWin.isPlaying){
+                        audioWin.start()
+                    }
+
                     if (tries == 0) {
                         Text(text = "Has ganado :) , quieres jugar otra vez?")
                     } else {
-                        Text(text = "Has ganado :) con $tries intentos, quieres jugar otra vez?")
+                        Text(text = "Has ganado :) con $tries fallos, quieres jugar otra vez?")
                     }
 
                 }
