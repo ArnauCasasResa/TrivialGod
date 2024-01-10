@@ -26,6 +26,9 @@ import androidx.navigation.NavController
 fun EndScreen(navController: NavController, win:Boolean, tries:Int){
     val audioWin: MediaPlayer = MediaPlayer.create(LocalContext.current,R.raw.win)
     val audioLose: MediaPlayer = MediaPlayer.create(LocalContext.current,R.raw.lose)
+    if (win){
+        audioWin.start()
+    }else audioLose.start()
     Image(painter = painterResource(id = R.drawable.beix),
         contentDescription = "Fondo",
         Modifier.fillMaxWidth(),
@@ -49,18 +52,11 @@ fun EndScreen(navController: NavController, win:Boolean, tries:Int){
         Column(modifier = Modifier.padding(10.dp)) {
             Box(modifier = Modifier.padding(2.dp)) {
                 if (!win) {
-                    if (!audioLose.isPlaying){
-                        audioLose.start()
-                    }
                     Text(
                         text = "Has perdido :(, quieres jugar otra vez?",
                         modifier = Modifier.align(Alignment.Center)
                     )
                 } else {
-                    if (!audioWin.isPlaying){
-                        audioWin.start()
-                    }
-
                     if (tries == 0) {
                         Text(text = "Has ganado :) , quieres jugar otra vez?")
                     } else {
