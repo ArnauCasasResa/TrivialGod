@@ -66,6 +66,7 @@ fun EndScreen(navController: NavController, win:Boolean, tries:Int){
                 .background(Color.Gray)
                 .width(125.dp)
                 .padding(1.dp)
+                .align(Alignment.CenterHorizontally)
                 .clickable { navController.navigate(Routes.MenuScreen.route) }) {
                 Text(
                     text = "Menu",
@@ -82,6 +83,7 @@ fun EndScreen(navController: NavController, win:Boolean, tries:Int){
                 .background(Color.Gray)
                 .width(125.dp)
                 .padding(1.dp)
+                .align(Alignment.CenterHorizontally)
                 .clickable { navController.navigate(Routes.GameScreen.route) }) {
                 Text(
                     text = "Play Again",
