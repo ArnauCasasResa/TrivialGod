@@ -30,9 +30,8 @@ class MainActivity : ComponentActivity() {
                     val navigationController = rememberNavController()
                     NavHost(
                         navController = navigationController,
-                        startDestination = Routes.SplashScreen.route
+                        startDestination = Routes.MenuScreen.route
                     ) {
-                        composable(Routes.SplashScreen.route) { SplashScreen(navigationController) }
                         composable(Routes.MenuScreen.route) { MenuScreen(navigationController) }
                         composable(Routes.GameScreen.route, arguments = listOf(navArgument("dificultad"){type= NavType.StringType}))
                             {backStackEntry -> GameScreen(navigationController,backStackEntry.arguments?.getString("dificultad")?:"dificil") }
