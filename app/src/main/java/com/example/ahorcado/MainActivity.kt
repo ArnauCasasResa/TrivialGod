@@ -33,6 +33,7 @@ class MainActivity : ComponentActivity() {
                         startDestination = Routes.MenuScreen.route
                     ) {
                         composable(Routes.MenuScreen.route) { MenuScreen(navigationController) }
+                        composable(Routes.SettingsScreen.route) { SettingsScreen(navigationController) }
                         composable(Routes.GameScreen.route, arguments = listOf(navArgument("dificultad"){type= NavType.StringType}))
                             {backStackEntry -> GameScreen(navigationController,backStackEntry.arguments?.getString("dificultad")?:"dificil") }
                         composable(Routes.EndScreen.route,arguments = listOf(navArgument("win") {type = NavType.BoolType},

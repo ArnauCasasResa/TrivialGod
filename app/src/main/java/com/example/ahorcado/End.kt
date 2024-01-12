@@ -35,7 +35,7 @@ fun EndScreen(navController: NavController, win:Boolean, tries:Int,dificultad:St
         ) {
         }
         Image(
-            painter = painterResource(id = R.drawable.ahorcado),
+            painter = painterResource(id = R.drawable.trivial),
             contentDescription = "Ahogado",
             modifier = Modifier.fillMaxWidth()
         )

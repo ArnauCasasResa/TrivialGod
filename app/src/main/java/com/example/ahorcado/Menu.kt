@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -39,22 +40,17 @@ fun MenuScreen(navController: NavController){
         contentDescription = "Fondo",
         Modifier.fillMaxWidth(),
         contentScale = ContentScale.FillBounds)
-    Column(modifier = Modifier.padding(20.dp),horizontalAlignment = Alignment.CenterHorizontally){
+    Column(horizontalAlignment = Alignment.CenterHorizontally){
         Box(modifier = Modifier
             .height(100.dp)) {
         }
         Image(
             painter = painterResource(id = R.drawable.trivial),
             contentDescription = "AHORCADO",
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().size(300.dp)
         )
-        Box(modifier = Modifier
-            .height(20.dp)) {
-        }
+
         Column(modifier = Modifier.padding(10.dp)) {
-            Box(modifier = Modifier
-                .height(15.dp)) {
-            }
             Box(modifier = Modifier
                 .background(Color.Gray)
                 .width(125.dp)
@@ -72,12 +68,11 @@ fun MenuScreen(navController: NavController){
                 .width(125.dp)
                 .padding(1.dp)
                 .clickable {
-                    show = true
+                    navController.navigate(Routes.SettingsScreen.route)
                 }) {
-                Text(text = "Help",
+                Text(text = "Settings",
                     modifier = Modifier.align(Alignment.Center),
                     color = Color.White)
-                MyDialog(show,{ show = false })
             }
             OutlinedTextField(
                 value = selectedText,
@@ -104,25 +99,6 @@ fun MenuScreen(navController: NavController){
             }
         }
 
-    }
-}
-
-@Composable
-fun MyDialog(show: Boolean, onDismiss: () -> Unit){
-    if(show){
-        Dialog(onDismissRequest = { onDismiss() }) {
-            Column(
-                Modifier
-                    .background(Color.White)
-                    .padding(24.dp)
-                    .fillMaxWidth()) {
-                Text(text = "Como se juega?")
-                Text(text = "\nEl objetivo del juego es adivinar la palabra con la unica pista que nos dan que es la cantidad de letras que contiene.")
-                Text(text = "Al elegir una letra, si en esa palabra esta la letra que hsa escogido se revelara la posicion y la cantidad(si esque esa letra esta repetida), posteriormente se descartara la letra")
-                Text(text = "Si no esta en la palabra se descartara la letra y se iniciara el dibujo del ahorcado, si el dibujo se completa y no consigue completar la palabra habras perdido.")
-
-            }
-        }
     }
 }
 

@@ -60,22 +60,12 @@ fun GameScreen(navController: NavController, selectedText: String){
     var palabraRandom by remember {mutableIntStateOf((palabrasJuego.indices).random())}
     var palabraEscogida by remember {mutableStateOf(palabrasJuego[palabraRandom])}
     var palabraEscondida by remember { mutableStateOf("_".repeat(palabraEscogida.length))}
-
-    var imagen = when(numImagen){
-        0->R.drawable.fase0
-        1->R.drawable.fase1
-        2->R.drawable.fase2
-        3->R.drawable.fase3
-        4->R.drawable.fase4
-        5->R.drawable.fase5
-        else ->R.drawable.fase6
-    }
     Image(painter = painterResource(id = R.drawable.beix),
         contentDescription = "Fondo",
         Modifier.fillMaxWidth(),
         contentScale = ContentScale.FillBounds)
     Column(modifier = Modifier.padding(10.dp),horizontalAlignment = Alignment.CenterHorizontally) {
-        Image(painter = painterResource(imagen),
+        Image(painter = painterResource(R.drawable.trivial),
             contentDescription = "ahorcado",
             modifier = Modifier.size(200.dp))
         Box(modifier = Modifier){
@@ -114,7 +104,6 @@ fun GameScreen(navController: NavController, selectedText: String){
                                     colorCasilla = Color.Red
                                     numImagen++
                                     tries++
-                                    if (imagen != R.drawable.fase5) audioFallo.start()
                                 } else {
                                     audioCorrecto.start()
                                     colorCasilla = Color.Green
@@ -141,12 +130,10 @@ fun GameScreen(navController: NavController, selectedText: String){
                 audioWinPlaying=true
             }
             navController.navigate(Routes.EndScreen.createRoute(win, tries,selectedText))
-        }else if(imagen==R.drawable.fase6){
-            if (!audioLosePlaying){
+        }else if (!audioLosePlaying){
                 audioLose.start()
                 audioLosePlaying=true
-            }
-            navController.navigate(Routes.EndScreen.createRoute(win, tries,selectedText))
+                navController.navigate(Routes.EndScreen.createRoute(win, tries,selectedText))
         }
     }
 }
