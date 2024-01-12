@@ -38,7 +38,12 @@ import androidx.navigation.NavController
 @Composable
 fun GameScreen(navController: NavController, selectedText: String){
     val dificultad by remember{ mutableStateOf(selectedText)}
+
     var win=false
+    val audioWin=MediaPlayer.create(LocalContext.current,R.raw.win)
+    val audioLose=MediaPlayer.create(LocalContext.current,R.raw.lose)
+    var audioWinPlaying by remember { mutableStateOf(false)}
+    var audioLosePlaying by remember { mutableStateOf(false)}
     val audioCorrecto:MediaPlayer=MediaPlayer.create(LocalContext.current,R.raw.correct)
     val audioFallo:MediaPlayer=MediaPlayer.create(LocalContext.current,R.raw.fail)
     var tries by remember{ mutableIntStateOf(0)}
@@ -109,7 +114,7 @@ fun GameScreen(navController: NavController, selectedText: String){
                                     colorCasilla = Color.Red
                                     numImagen++
                                     tries++
-                                    if (imagen!=R.drawable.fase5)audioFallo.start()
+                                    if (imagen != R.drawable.fase5) audioFallo.start()
                                 } else {
                                     audioCorrecto.start()
                                     colorCasilla = Color.Green
@@ -131,8 +136,16 @@ fun GameScreen(navController: NavController, selectedText: String){
         }
         if (palabraEscondida==palabraEscogida){
             win=true
+            if (!audioWinPlaying){
+                audioWin.start()
+                audioWinPlaying=true
+            }
             navController.navigate(Routes.EndScreen.createRoute(win, tries,selectedText))
         }else if(imagen==R.drawable.fase6){
+            if (!audioLosePlaying){
+                audioLose.start()
+                audioLosePlaying=true
+            }
             navController.navigate(Routes.EndScreen.createRoute(win, tries,selectedText))
         }
     }
