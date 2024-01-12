@@ -44,7 +44,7 @@ fun MenuScreen(navController: NavController){
             .height(100.dp)) {
         }
         Image(
-            painter = painterResource(id = R.drawable.ahorcado),
+            painter = painterResource(id = R.drawable.trivial),
             contentDescription = "AHORCADO",
             modifier = Modifier.fillMaxWidth()
         )
