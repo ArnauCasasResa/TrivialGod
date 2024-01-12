@@ -40,7 +40,8 @@ class MainActivity : ComponentActivity() {
                             navArgument("tries"){type= NavType.IntType}))
                         {backStackEntry -> EndScreen(navigationController,
                             backStackEntry.arguments?.getBoolean("win") ?: false,
-                            backStackEntry.arguments?.getInt("tries")?:0) }
+                            backStackEntry.arguments?.getInt("tries")?:0,
+                            backStackEntry.arguments?.getString("dificultad")?:"dificil") }
                     }
                 }
             }

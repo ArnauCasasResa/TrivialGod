@@ -23,7 +23,7 @@ import androidx.navigation.NavController
 
 
 @Composable
-fun EndScreen(navController: NavController, win:Boolean, tries:Int){
+fun EndScreen(navController: NavController, win:Boolean, tries:Int,dificultad:String){
     Image(painter = painterResource(id = R.drawable.beix),
         contentDescription = "Fondo",
         Modifier.fillMaxWidth(),
@@ -82,7 +82,7 @@ fun EndScreen(navController: NavController, win:Boolean, tries:Int){
                 .width(125.dp)
                 .padding(1.dp)
                 .align(Alignment.CenterHorizontally)
-                .clickable { navController.navigate(Routes.GameScreen.route) }) {
+                .clickable { navController.navigate(Routes.GameScreen.createRoute(dificultad)) }) {
                 Text(
                     text = "Play Again",
                     modifier = Modifier.align(Alignment.Center),
