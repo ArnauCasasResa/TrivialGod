@@ -35,7 +35,6 @@ fun MenuScreen(navController: NavController){
     var selectedText by remember { mutableStateOf("Easy") }
     var expanded by remember { mutableStateOf(false) }
     val hobbies = listOf("Easy", "Normal", "Dificult")
-    var show by remember { mutableStateOf(false) }
     Image(painter = painterResource(id = R.drawable.beix),
         contentDescription = "Fondo",
         Modifier.fillMaxWidth(),
