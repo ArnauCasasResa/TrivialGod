@@ -1,6 +1,5 @@
 package com.example.ahorcado
 
-import android.media.MediaPlayer
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,18 +15,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.ahorcado.viewModel.GameViewModel
 
 
 @Composable
-fun EndScreen(navController: NavController, win:Boolean, tries:Int,dificultad:String){
-    Image(painter = painterResource(id = R.drawable.beix),
-        contentDescription = "Fondo",
-        Modifier.fillMaxWidth(),
-        contentScale = ContentScale.FillBounds)
+fun EndScreen(navController: NavController, myViewModel: GameViewModel){
     Column(modifier = Modifier.padding(20.dp),horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
             modifier = Modifier
@@ -46,19 +41,17 @@ fun EndScreen(navController: NavController, win:Boolean, tries:Int,dificultad:St
         }
         Column(modifier = Modifier.padding(10.dp)) {
             Box(modifier = Modifier.padding(2.dp)) {
-                if (!win) {
-                    Text(
-                        text = "Has perdido :(, quieres jugar otra vez?",
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                } else {
-                    if (tries == 0) {
-                        Text(text = "Has ganado :) , quieres jugar otra vez?")
-                    } else {
-                        Text(text = "Has ganado :) con $tries fallos, quieres jugar otra vez?")
-                    }
+            Text(
+                text = "Has perdido :(, quieres jugar otra vez?",
+                modifier = Modifier.align(Alignment.Center)
+            )
 
-                }
+
+            Text(text = "Has ganado :) , quieres jugar otra vez?")
+
+            Text(text = "Has ganado :) con pan fallos, quieres jugar otra vez?")
+
+
             }
             Box(modifier = Modifier
                 .background(Color.Gray)
@@ -67,7 +60,7 @@ fun EndScreen(navController: NavController, win:Boolean, tries:Int,dificultad:St
                 .align(Alignment.CenterHorizontally)
                 .clickable { navController.navigate(Routes.MenuScreen.route) }) {
                 Text(
-                    text = "Menu",
+                    text = "Share",
                     modifier = Modifier.align(Alignment.Center),
                     color = Color.White
                 )
@@ -82,9 +75,9 @@ fun EndScreen(navController: NavController, win:Boolean, tries:Int,dificultad:St
                 .width(125.dp)
                 .padding(1.dp)
                 .align(Alignment.CenterHorizontally)
-                .clickable { navController.navigate(Routes.GameScreen.createRoute(dificultad)) }) {
+                .clickable { navController.navigate(Routes.MenuScreen.route) }) {
                 Text(
-                    text = "Play Again",
+                    text = "Return to menu",
                     modifier = Modifier.align(Alignment.Center),
                     color = Color.White
                 )

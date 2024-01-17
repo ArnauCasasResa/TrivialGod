@@ -10,10 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,19 +23,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
+import com.example.ahorcado.viewModel.GameViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MenuScreen(navController: NavController){
-    var selectedText by remember { mutableStateOf("Easy") }
-    var expanded by remember { mutableStateOf(false) }
-    val hobbies = listOf("Easy", "Normal", "Dificult")
-    Image(painter = painterResource(id = R.drawable.beix),
-        contentDescription = "Fondo",
-        Modifier.fillMaxWidth(),
-        contentScale = ContentScale.FillBounds)
     Column(horizontalAlignment = Alignment.CenterHorizontally){
         Box(modifier = Modifier
             .height(100.dp)) {
@@ -54,7 +44,7 @@ fun MenuScreen(navController: NavController){
                 .background(Color.Gray)
                 .width(125.dp)
                 .padding(1.dp)
-                .clickable { navController.navigate(Routes.GameScreen.createRoute(selectedText)) }) {
+                .clickable { navController.navigate(Routes.GameScreen.route) }) {
                 Text(text = "Play",
                     modifier = Modifier.align(Alignment.Center),
                     color = Color.White)
@@ -72,29 +62,6 @@ fun MenuScreen(navController: NavController){
                 Text(text = "Settings",
                     modifier = Modifier.align(Alignment.Center),
                     color = Color.White)
-            }
-            OutlinedTextField(
-                value = selectedText,
-                onValueChange = { selectedText = it },
-                enabled = false,
-                readOnly = true,
-                modifier = Modifier
-                    .clickable { expanded = true }
-                    .width(125.dp).background(color = Color.LightGray)
-            )
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false },
-                modifier = Modifier.width(125.dp)
-            ) {
-                hobbies.forEach { hobby ->
-                    DropdownMenuItem(text = { Text(text = hobby) },
-                        modifier = Modifier.background(color=Color.LightGray),
-                        onClick = {
-                            expanded = false
-                            selectedText = hobby
-                        })
-                }
             }
         }
 

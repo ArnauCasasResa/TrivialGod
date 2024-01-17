@@ -4,24 +4,24 @@ import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.example.ahorcado.ui.theme.AhorcadoTheme
+import com.example.ahorcado.viewModel.GameViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val myViewModel by viewModels<GameViewModel>()
         setContent {
-            AhorcadoTheme {
+            AhorcadoTheme(myViewModel.darkmode) {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -33,15 +33,9 @@ class MainActivity : ComponentActivity() {
                         startDestination = Routes.MenuScreen.route
                     ) {
                         composable(Routes.MenuScreen.route) { MenuScreen(navigationController) }
-                        composable(Routes.SettingsScreen.route) { SettingsScreen(navigationController) }
-                        composable(Routes.GameScreen.route, arguments = listOf(navArgument("dificultad"){type= NavType.StringType}))
-                            {backStackEntry -> GameScreen(navigationController,backStackEntry.arguments?.getString("dificultad")?:"dificil") }
-                        composable(Routes.EndScreen.route,arguments = listOf(navArgument("win") {type = NavType.BoolType},
-                            navArgument("tries"){type= NavType.IntType}))
-                        {backStackEntry -> EndScreen(navigationController,
-                            backStackEntry.arguments?.getBoolean("win") ?: false,
-                            backStackEntry.arguments?.getInt("tries")?:0,
-                            backStackEntry.arguments?.getString("dificultad")?:"dificil") }
+                        composable(Routes.SettingsScreen.route) { SettingsScreen(navigationController,myViewModel)}
+                        composable(Routes.GameScreen.route) {GameScreen(navigationController,myViewModel) }
+                        composable(Routes.EndScreen.route) {EndScreen(navigationController,myViewModel)}
                     }
                 }
             }
