@@ -1,19 +1,25 @@
 package com.example.ahorcado.viewModel
 
+import android.annotation.SuppressLint
 import android.view.View
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 
+@SuppressLint("MutableCollectionMutableState")
 class GameViewModel:ViewModel() {
     //VARIABLES
+    var puntuacion:Int by mutableIntStateOf(0)
+        private set
     var dificultad:String by mutableStateOf("Easy")
         private set
-    var duracion:Float by mutableStateOf(5f)
+    var duracion:Float by mutableFloatStateOf(5f)
         private set
-    var rondas:Int by mutableStateOf(10)
+    var rondas:Int by mutableIntStateOf(10)
         private set
     var statusUno by  mutableStateOf(false)
         private set
@@ -23,7 +29,8 @@ class GameViewModel:ViewModel() {
         private set
     var darkmode by  mutableStateOf(false)
         private set
-    var preguntasFaciles by mutableStateOf(arrayOf(
+    var preguntasFaciles by mutableStateOf(
+        mutableListOf(
         "¿Cuál es la capital de Francia?",
         "¿Quién escribió el libro 'Don Quijote de la Mancha'?",
         "¿Cuál es el río más largo del mundo?",
@@ -38,9 +45,10 @@ class GameViewModel:ViewModel() {
         "¿Cuál es el símbolo químico del oro?",
         "¿Cuál es el país más grande del mundo en términos de superficie?",
         "¿Cuál es el número atómico del oxígeno?",
-        "¿Cuál es el autor de la obra 'Romeo y Julieta'?"))
+        "¿Cuál es el autor de la obra 'Romeo y Julieta'?")
+    )
         private set
-    var preguntasNormales by mutableStateOf(arrayOf(
+    var preguntasNormales by mutableStateOf(mutableListOf(
         "¿Cuál es la capital de Australia?",
         "¿Quién pintó 'La última cena'?",
         "¿Cuál es el río más largo de América del Norte?",
@@ -57,7 +65,7 @@ class GameViewModel:ViewModel() {
         "¿Cuál es el número atómico del hierro?",
         "¿Cuál es el autor de la obra '1984'?"))
         private set
-    var preguntasDificiles by mutableStateOf(arrayOf(
+    var preguntasDificiles by mutableStateOf(mutableListOf(
         "¿Cuál es la capital de Mongolia?",
         "¿Quién escribió la obra 'Moby-Dick'?",
         "¿Cuál es el río más largo de América del Sur?",

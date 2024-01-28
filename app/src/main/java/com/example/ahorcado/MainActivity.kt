@@ -1,5 +1,6 @@
 package com.example.ahorcado
 
+import com.example.ahorcado.Class.Routes
 import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.activity.ComponentActivity
