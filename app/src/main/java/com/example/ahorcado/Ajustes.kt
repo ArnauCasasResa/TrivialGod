@@ -34,7 +34,6 @@ import com.example.ahorcado.viewModel.GameViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(navController: NavController, myViewModel: GameViewModel){
-    var oscuro by remember { mutableStateOf(false) }
     var expanded by remember { mutableStateOf(false) }
     val opciones = listOf("Easy", "Normal", "Dificult")
 

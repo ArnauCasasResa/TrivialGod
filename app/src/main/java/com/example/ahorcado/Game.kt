@@ -35,7 +35,11 @@ import com.example.ahorcado.viewModel.GameViewModel
 @Composable
 fun GameScreen(navController: NavController, myViewModel: GameViewModel){
     val audioWin=MediaPlayer.create(LocalContext.current,R.raw.win)
-    val abc by remember { mutableStateOf(arrayOf('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'))}
+    var preguntas=when(myViewModel.dificultad){
+        "Easy"->myViewModel.preguntasFaciles
+        "Normal"-> myViewModel.preguntasNormales
+        else->myViewModel.preguntasDificiles
+    }
     Column(modifier = Modifier.padding(10.dp),horizontalAlignment = Alignment.CenterHorizontally) {
         Image(painter = painterResource(R.drawable.trivial),
             contentDescription = "ahorcado",
