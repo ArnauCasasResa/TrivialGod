@@ -91,7 +91,7 @@ fun SettingsScreen(navController: NavController, myViewModel: GameViewModel){
                     Slider(
                         value = myViewModel.duracion,
                         onValueChange = { myViewModel.modificarDuracion(it)},
-                        valueRange = 10f..120f,
+                        valueRange = 10f..60f,
                         steps = 5
                     )
                     Text(text = "${ myViewModel.duracion.toInt()} s.",

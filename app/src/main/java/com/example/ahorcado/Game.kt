@@ -144,13 +144,16 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
             }
 
         }
-        Box(modifier = Modifier
-            .padding(10.dp)
-            .align(Alignment.CenterHorizontally)
-            .fillMaxWidth()){
-            LinearProgressIndicator(progress = tiempo, modifier = Modifier.fillMaxWidth())
+        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
+            Box(modifier = Modifier
+                .padding(10.dp)
+                .align(Alignment.CenterHorizontally)
+                .fillMaxWidth()){
+                LinearProgressIndicator(progress = tiempo)
+            }
+            Text(text = "${tiempo.toInt()}")
         }
-        Text(text = "${tiempo.toInt()}")
+
     }
 
 }

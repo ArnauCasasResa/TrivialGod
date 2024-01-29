@@ -18,7 +18,7 @@ class GameViewModel:ViewModel() {
         private set
     var dificultad:String by mutableStateOf("Easy")
         private set
-    var duracion:Float by mutableFloatStateOf(60f)
+    var duracion:Float by mutableFloatStateOf(30f)
         private set
     var rondas:Int by mutableIntStateOf(10)
         private set
