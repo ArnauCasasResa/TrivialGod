@@ -11,10 +11,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.withConsumedWindowInsets
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -42,14 +46,17 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
         "Normal"-> myViewModel.preguntasNormales
         else->myViewModel.preguntasDificiles
     }
+    var tiempo by remember { mutableStateOf(myViewModel.duracion)}
     var preguntaActual by remember { mutableStateOf(preguntas.random()) }
     var rondaActual by remember { mutableIntStateOf(1) }
-    Column(modifier = Modifier.padding(10.dp),horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = Modifier
+        .padding(10.dp)
+        .fillMaxWidth(),horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(modifier = Modifier.height(20.dp))
         Text(text = "$rondaActual/${ myViewModel.rondas }")
         Spacer(modifier = Modifier.height(20.dp))
-        Box(modifier = Modifier.clickable {  }){
-            Text(text = preguntaActual,
+        Box{
+            Text(text = preguntaActual.question,
                 fontSize = 20.sp,
                 textAlign = TextAlign.Center)
         }
@@ -58,12 +65,12 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
         Spacer(modifier = Modifier.height(50.dp))
         Row {
             Box(modifier = Modifier
-                .clickable{
-                    if (rondaActual==myViewModel.rondas){
+                .clickable {
+                    if (rondaActual == myViewModel.rondas) {
                         navController.navigate(Routes.EndScreen.route)
-                    }else {
+                    } else {
                         preguntas.remove(preguntaActual)
-                        preguntaActual=preguntas.random()
+                        preguntaActual = preguntas.random()
                         rondaActual++
 
                     }
@@ -77,12 +84,12 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
             }
             Spacer(modifier = Modifier.width(100.dp))
             Box(modifier = Modifier
-                .clickable{
-                    if (rondaActual==myViewModel.rondas){
+                .clickable {
+                    if (rondaActual == myViewModel.rondas) {
                         navController.navigate(Routes.EndScreen.route)
-                    }else {
+                    } else {
                         preguntas.remove(preguntaActual)
-                        preguntaActual=preguntas.random()
+                        preguntaActual = preguntas.random()
                         rondaActual++
 
                     }
@@ -99,12 +106,12 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
         Spacer(modifier = Modifier.height(20.dp))
         Row {
             Box(modifier = Modifier
-                .clickable{
-                    if (rondaActual==myViewModel.rondas){
+                .clickable {
+                    if (rondaActual == myViewModel.rondas) {
                         navController.navigate(Routes.EndScreen.route)
-                    }else {
+                    } else {
                         preguntas.remove(preguntaActual)
-                        preguntaActual=preguntas.random()
+                        preguntaActual = preguntas.random()
                         rondaActual++
 
                     }
@@ -118,12 +125,12 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
             }
             Spacer(modifier = Modifier.width(100.dp))
             Box(modifier = Modifier
-                .clickable{
-                    if (rondaActual==myViewModel.rondas){
+                .clickable {
+                    if (rondaActual == myViewModel.rondas) {
                         navController.navigate(Routes.EndScreen.route)
-                    }else {
+                    } else {
                         preguntas.remove(preguntaActual)
-                        preguntaActual=preguntas.random()
+                        preguntaActual = preguntas.random()
                         rondaActual++
 
                     }
@@ -137,6 +144,13 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
             }
 
         }
+        Box(modifier = Modifier
+            .padding(10.dp)
+            .align(Alignment.CenterHorizontally)
+            .fillMaxWidth()){
+            LinearProgressIndicator(progress = tiempo, modifier = Modifier.fillMaxWidth())
+        }
+        Text(text = "${tiempo.toInt()}")
     }
 
 }

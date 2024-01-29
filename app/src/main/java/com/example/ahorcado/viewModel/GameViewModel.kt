@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.example.ahorcado.Class.Preguntas
 
 @SuppressLint("MutableCollectionMutableState")
 class GameViewModel:ViewModel() {
@@ -17,7 +18,7 @@ class GameViewModel:ViewModel() {
         private set
     var dificultad:String by mutableStateOf("Easy")
         private set
-    var duracion:Float by mutableFloatStateOf(5f)
+    var duracion:Float by mutableFloatStateOf(60f)
         private set
     var rondas:Int by mutableIntStateOf(10)
         private set
@@ -31,56 +32,240 @@ class GameViewModel:ViewModel() {
         private set
     var preguntasFaciles by mutableStateOf(
         mutableListOf(
-        "¿Cuál es la capital de Francia?",
-        "¿Quién escribió el libro 'Don Quijote de la Mancha'?",
-        "¿Cuál es el río más largo del mundo?",
-        "¿Cuál es el color primario?",
-        "¿Cuántos días tiene el mes de febrero en un año bisiesto?",
-        "¿Cuál es el planeta más cercano al sol?",
-        "¿Cuál es el animal terrestre más grande?",
-        "¿Cuál es el océano más grande del mundo?",
-        "¿Cuál es el resultado de sumar 2 + 2?",
-        "¿Cuál es el idioma más hablado del mundo?",
-        "¿En qué continente se encuentra Egipto?",
-        "¿Cuál es el símbolo químico del oro?",
-        "¿Cuál es el país más grande del mundo en términos de superficie?",
-        "¿Cuál es el número atómico del oxígeno?",
-        "¿Cuál es el autor de la obra 'Romeo y Julieta'?")
+            Preguntas.quiz(
+                "¿Cuál es la capital de Francia?",
+                mutableListOf("Madrid", "Roma", "París", "Berlín"),
+                "París",
+
+            ),
+            Preguntas.quiz(
+                "¿Quién escribió el libro 'Don Quijote de la Mancha'?",
+                mutableListOf("Miguel de Cervantes", "Gabriel García Márquez", "William Shakespeare", "Leo Tolstoy"),
+                "Miguel de Cervantes"
+            ),
+            Preguntas.quiz(
+                "¿Cuál es el río más largo del mundo?",
+                mutableListOf("Nilo", "Amazonas", "Mississippi", "Yangtsé"),
+                "Amazonas"
+            ),
+            Preguntas.quiz(
+                "¿Cuál es el color primario?",
+                mutableListOf("Rojo", "Verde", "Azul", "Amarillo"),
+                "Rojo"
+            ),
+            Preguntas.quiz(
+                "¿Cuántos días tiene el mes de febrero en un año bisiesto?",
+                mutableListOf("28", "29", "30", "31"),
+                "29"
+            ),
+            Preguntas.quiz(
+                "¿Cuál es el planeta más cercano al sol?",
+                mutableListOf("Tierra", "Marte", "Mercurio", "Júpiter"),
+                "Mercurio"
+            ),
+            Preguntas.quiz(
+                "¿Cuál es el animal terrestre más grande?",
+                mutableListOf("Elefante", "Jirafa", "Ballena Azul", "Hipopótamo"),
+                "Elefante"
+            ),
+            Preguntas.quiz(
+                "¿Cuál es el océano más grande del mundo?",
+                mutableListOf("Océano Atlántico", "Océano Índico", "Océano Pacífico", "Océano Ártico"),
+                "Océano Pacífico"
+            ),
+            Preguntas.quiz(
+                "¿Cuál es el resultado de sumar 2 + 2?",
+                mutableListOf("3", "4", "5", "6"),
+                "4"
+            ),
+            Preguntas.quiz(
+                "¿Cuál es el idioma más hablado del mundo?",
+                mutableListOf("Inglés", "Chino mandarín", "Español", "Hindi"),
+                "Chino mandarín"
+            ),
+            Preguntas.quiz(
+                "¿En qué continente se encuentra Egipto?",
+                mutableListOf("Europa", "Asia", "África", "Oceanía"),
+                "África"
+            ),
+            Preguntas.quiz(
+                "¿Cuál es el símbolo químico del oro?",
+                mutableListOf("Au", "Ag", "Fe", "Cu"),
+                "Au"
+            ),
+            Preguntas.quiz(
+                "¿Cuál es el país más grande del mundo en términos de superficie?",
+                mutableListOf("Rusia", "China", "Estados Unidos", "Canadá"),
+                "Rusia"
+            ),
+            Preguntas.quiz(
+                "¿Cuál es el número atómico del oxígeno?",
+                mutableListOf("6", "7", "8", "9"),
+                "8"
+            ),
+            Preguntas.quiz(
+                "¿Cuál es el autor de la obra 'Romeo y Julieta'?",
+                mutableListOf("William Shakespeare", "Jorge Luis Borges", "Gabriel García Márquez", "Miguel de Cervantes"),
+                "William Shakespeare"
+            )
+        )
     )
         private set
     var preguntasNormales by mutableStateOf(mutableListOf(
-        "¿Cuál es la capital de Australia?",
-        "¿Quién pintó 'La última cena'?",
-        "¿Cuál es el río más largo de América del Norte?",
-        "¿Cuál es el color secundario obtenido al mezclar azul y amarillo?",
-        "¿Cuántos días tiene el mes de abril?",
-        "¿Cuál es el planeta más grande del sistema solar?",
-        "¿Cuál es el animal marino más grande del mundo?",
-        "¿Cuál es el segundo océano más grande del mundo?",
-        "¿Cuál es el resultado de multiplicar 5 por 8?",
-        "¿Cuál es el idioma oficial de Brasil?",
-        "¿En qué año se firmó la Declaración de Independencia de Estados Unidos?",
-        "¿Cuál es el símbolo químico del carbono?",
-        "¿Cuál es la montaña más alta de Europa?",
-        "¿Cuál es el número atómico del hierro?",
-        "¿Cuál es el autor de la obra '1984'?"))
+        Preguntas.quiz(
+            "¿Cuál es la capital de Australia?",
+            mutableListOf("Sídney", "Melbourne", "Canberra", "Brisbane"),
+            "Canberra"
+        ),
+        Preguntas.quiz(
+            "¿Quién pintó 'La última cena'?",
+            mutableListOf("Leonardo da Vinci", "Vincent van Gogh", "Pablo Picasso", "Michelangelo"),
+            "Leonardo da Vinci"
+        ),
+        Preguntas.quiz(
+            "¿Cuál es el río más largo de América del Norte?",
+            mutableListOf("Mississippi", "Misisipi", "Yukón", "Colorado"),
+            "Mississippi"
+        ),
+        Preguntas.quiz(
+            "¿Cuál es el color secundario obtenido al mezclar azul y amarillo?",
+            mutableListOf("Verde", "Naranja", "Violeta", "Marrón"),
+            "Verde"
+        ),
+        Preguntas.quiz(
+            "¿Cuántos días tiene el mes de abril?",
+            mutableListOf("28", "29", "30", "31"),
+            "30"
+        ),
+        Preguntas.quiz(
+            "¿Cuál es el planeta más grande del sistema solar?",
+            mutableListOf("Júpiter", "Saturno", "Urano", "Neptuno"),
+            "Júpiter"
+        ),
+        Preguntas.quiz(
+            "¿Cuál es el animal marino más grande del mundo?",
+            mutableListOf("Orca", "Cachalote", "Tiburón ballena", "Calamar gigante"),
+            "Tiburón ballena"
+        ),
+        Preguntas.quiz(
+            "¿Cuál es el segundo océano más grande del mundo?",
+            mutableListOf("Océano Atlántico", "Océano Índico", "Océano Pacífico", "Océano Ártico"),
+            "Océano Atlántico"
+        ),
+        Preguntas.quiz(
+            "¿Cuál es el resultado de multiplicar 5 por 8?",
+            mutableListOf("20", "30", "35", "40"),
+            "40"
+        ),
+        Preguntas.quiz(
+            "¿Cuál es el idioma oficial de Brasil?",
+            mutableListOf("Inglés", "Español", "Portugués", "Francés"),
+            "Portugués"
+        ),
+        Preguntas.quiz(
+            "¿En qué año se firmó la Declaración de Independencia de Estados Unidos?",
+            mutableListOf("1776", "1789", "1812", "1865"),
+            "1776"
+        ),
+        Preguntas.quiz(
+            "¿Cuál es el símbolo químico del carbono?",
+            mutableListOf("C", "Co", "Ca", "Cu"),
+            "C"
+        ),
+        Preguntas.quiz(
+            "¿Cuál es la montaña más alta de Europa?",
+            mutableListOf("Mont Blanc", "Cervino", "Elbrus", "Matterhorn"),
+            "Elbrus"
+        ),
+        Preguntas.quiz(
+            "¿Cuál es el número atómico del hierro?",
+            mutableListOf("24", "25", "26", "27"),
+            "26"
+        ),
+        Preguntas.quiz(
+            "¿Cuál es el autor de la obra '1984'?",
+            mutableListOf("George Orwell", "Aldous Huxley", "Ray Bradbury", "Franz Kafka"),
+            "George Orwell"
+        )
+    ))
         private set
     var preguntasDificiles by mutableStateOf(mutableListOf(
-        "¿Cuál es la capital de Mongolia?",
-        "¿Quién escribió la obra 'Moby-Dick'?",
-        "¿Cuál es el río más largo de América del Sur?",
-        "¿Cuál es el color obtenido al mezclar azul, rojo y amarillo?",
-        "¿Cuántos días tiene el mes de junio?",
-        "¿Cuál es el planeta más pequeño del sistema solar?",
-        "¿Cuál es el animal más rápido del mundo?",
-        "¿Cuál es el océano más profundo del mundo?",
-        "¿Cuál es el resultado de dividir 100 entre 7?",
-        "¿Cuál es el idioma oficial de Japón?",
-        "¿En qué año comenzó la Primera Guerra Mundial?",
-        "¿Cuál es el símbolo químico del calcio?",
-        "¿Cuál es la montaña más alta de África?",
-        "¿Cuál es el número atómico del plomo?",
-        "¿Cuál es el autor de la obra 'Cien años de soledad'?"))
+        Preguntas.quiz(
+            "¿Cuál es la capital de Mongolia?",
+            mutableListOf("Pekín", "Moscú", "Ulán Bator", "Bangkok"),
+            "Ulán Bator"
+        ),
+        Preguntas.quiz(
+            "¿Quién escribió la obra 'Moby-Dick'?",
+            mutableListOf("Herman Melville", "Mark Twain", "Nathaniel Hawthorne", "Charles Dickens"),
+            "Herman Melville"
+        ),
+        Preguntas.quiz(
+            "¿Cuál es el río más largo de América del Sur?",
+            mutableListOf("Amazonas", "Nilo", "Misisipi", "Yangtsé"),
+            "Amazonas"
+        ),
+        Preguntas.quiz(
+            "¿Cuál es el color obtenido al mezclar azul, rojo y amarillo?",
+            mutableListOf("Verde", "Naranja", "Violeta", "Marrón"),
+            "Marrón"
+        ),
+        Preguntas.quiz(
+            "¿Cuántos días tiene el mes de junio?",
+            mutableListOf("28", "29", "30", "31"),
+            "30"
+        ),
+        Preguntas.quiz(
+            "¿Cuál es el planeta más pequeño del sistema solar?",
+            mutableListOf("Mercurio", "Venus", "Marte", "Plutón"),
+            "Mercurio"
+        ),
+        Preguntas.quiz(
+            "¿Cuál es el animal más rápido del mundo?",
+            mutableListOf("Guepardo", "León", "Águila", "Flecha"),
+            "Guepardo"
+        ),
+        Preguntas.quiz(
+            "¿Cuál es el océano más profundo del mundo?",
+            mutableListOf("Océano Pacífico", "Océano Atlántico", "Océano Índico", "Océano Ártico"),
+            "Océano Pacífico"
+        ),
+        Preguntas.quiz(
+            "¿Cuál es el resultado de dividir 100 entre 7?",
+            mutableListOf("14", "15", "16", "17"),
+            "14"
+        ),
+        Preguntas.quiz(
+            "¿Cuál es el idioma oficial de Japón?",
+            mutableListOf("Chino", "Coreano", "Japonés", "Tailandés"),
+            "Japonés"
+        ),
+        Preguntas.quiz(
+            "¿En qué año comenzó la Primera Guerra Mundial?",
+            mutableListOf("1905", "1914", "1918", "1939"),
+            "1914"
+        ),
+        Preguntas.quiz(
+            "¿Cuál es el símbolo químico del calcio?",
+            mutableListOf("Ca", "Cu", "Co", "C"),
+            "Ca"
+        ),
+        Preguntas.quiz(
+            "¿Cuál es la montaña más alta de África?",
+            mutableListOf("Monte Everest", "Mont Blanc", "Monte Kilimanjaro", "Matterhorn"),
+            "Monte Kilimanjaro"
+        ),
+        Preguntas.quiz(
+            "¿Cuál es el número atómico del plomo?",
+            mutableListOf("78", "79", "80", "82"),
+            "82"
+        ),
+        Preguntas.quiz(
+            "¿Cuál es el autor de la obra 'Cien años de soledad'?",
+            mutableListOf("Gabriel García Márquez", "Jorge Luis Borges", "Pablo Neruda", "Mario Vargas Llosa"),
+            "Gabriel García Márquez"
+        )
+    ))
         private set
 
     //MODIFICACIONES DE VARIABLES

@@ -87,14 +87,17 @@ fun SettingsScreen(navController: NavController, myViewModel: GameViewModel){
         Box(){
             Row {
                 Text(text = "Time per\n  round",fontSize = 20.sp)
-                Slider(
-                    value = myViewModel.duracion,
-                    onValueChange = { myViewModel.modificarDuracion(it)},
-                    valueRange = 0f..10f,
-                    steps = 9
-                )
+                Column {
+                    Slider(
+                        value = myViewModel.duracion,
+                        onValueChange = { myViewModel.modificarDuracion(it)},
+                        valueRange = 10f..120f,
+                        steps = 5
+                    )
+                    Text(text = "${ myViewModel.duracion.toInt()} s.",
+                        modifier = Modifier.align(Alignment.CenterHorizontally))
+                }
             }
-
         }
 
         Spacer(modifier = Modifier.height(80.dp))
