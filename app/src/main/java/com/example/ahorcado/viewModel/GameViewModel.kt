@@ -269,6 +269,9 @@ class GameViewModel:ViewModel() {
         private set
 
     //MODIFICACIONES DE VARIABLES
+    fun aumentarPuntuacion(){
+        puntuacion++
+    }
     fun modificarDificultad(valor:String){
         dificultad=valor
     }

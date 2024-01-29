@@ -1,6 +1,6 @@
 package com.example.ahorcado
 
-import android.graphics.drawable.shapes.Shape
+import android.annotation.SuppressLint
 import com.example.ahorcado.Class.Routes
 import android.media.MediaPlayer
 import androidx.compose.foundation.BorderStroke
@@ -11,13 +11,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.withConsumedWindowInsets
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,7 +37,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.ahorcado.viewModel.GameViewModel
+import kotlinx.coroutines.delay
+import java.sql.Time
 
+@SuppressLint("MutableCollectionMutableState")
 @Composable
 fun GameScreen(navController: NavController, myViewModel: GameViewModel){
     val audioWin=MediaPlayer.create(LocalContext.current,R.raw.win)
@@ -49,6 +52,11 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
     var tiempo by remember { mutableStateOf(myViewModel.duracion)}
     var preguntaActual by remember { mutableStateOf(preguntas.random()) }
     var rondaActual by remember { mutableIntStateOf(1) }
+    var respostes =preguntaActual.answers.shuffled()
+    var respuestaUno=respostes[0]
+    var respuestaDos=respostes[1]
+    var respuestaTres=respostes[2]
+    var respuestaQuatro=respostes[3]
     Column(modifier = Modifier
         .padding(10.dp)
         .fillMaxWidth(),horizontalAlignment = Alignment.CenterHorizontally) {
@@ -63,31 +71,42 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
         Spacer(modifier = Modifier.height(20.dp))
         Image(painter = painterResource(R.drawable.question), contentDescription ="pregunta" )
         Spacer(modifier = Modifier.height(50.dp))
-        Row {
+        Row (Modifier.fillMaxWidth()) {
             Box(modifier = Modifier
+                .size(150.dp)
                 .clickable {
                     if (rondaActual == myViewModel.rondas) {
                         navController.navigate(Routes.EndScreen.route)
                     } else {
+                        if (respuestaUno==preguntaActual.correctAnswer){
+                            myViewModel.aumentarPuntuacion()
+                        }
+
                         preguntas.remove(preguntaActual)
                         preguntaActual = preguntas.random()
                         rondaActual++
-
                     }
                 }
                 .clip(shape = RoundedCornerShape(6.dp))
                 .border(BorderStroke(4.dp, Color.Blue))
                 .padding(20.dp)
             ){
-                Text(text = "pepe")
+                Text(text = respuestaUno,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.align(Alignment.Center),
+                    fontSize = 20.sp)
 
             }
-            Spacer(modifier = Modifier.width(100.dp))
+            Spacer(modifier = Modifier.width(70.dp))
             Box(modifier = Modifier
+                .size(150.dp)
                 .clickable {
                     if (rondaActual == myViewModel.rondas) {
                         navController.navigate(Routes.EndScreen.route)
                     } else {
+                        if (respuestaDos==preguntaActual.correctAnswer){
+                            myViewModel.aumentarPuntuacion()
+                        }
                         preguntas.remove(preguntaActual)
                         preguntaActual = preguntas.random()
                         rondaActual++
@@ -98,18 +117,25 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                 .border(BorderStroke(4.dp, Color.Blue))
                 .padding(20.dp)
             ){
-                Text(text = "pepe")
+                Text(text = respuestaDos,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.align(Alignment.Center),
+                    fontSize = 20.sp)
 
             }
 
         }
         Spacer(modifier = Modifier.height(20.dp))
-        Row {
+        Row (Modifier.fillMaxWidth()){
             Box(modifier = Modifier
+                .size(150.dp)
                 .clickable {
                     if (rondaActual == myViewModel.rondas) {
                         navController.navigate(Routes.EndScreen.route)
                     } else {
+                        if (respuestaTres==preguntaActual.correctAnswer){
+                            myViewModel.aumentarPuntuacion()
+                        }
                         preguntas.remove(preguntaActual)
                         preguntaActual = preguntas.random()
                         rondaActual++
@@ -120,15 +146,22 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                 .border(BorderStroke(4.dp, Color.Blue))
                 .padding(20.dp)
             ){
-                Text(text = "pepe")
+                Text(text = respuestaTres,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.align(Alignment.Center),
+                    fontSize = 20.sp)
 
             }
-            Spacer(modifier = Modifier.width(100.dp))
+            Spacer(modifier = Modifier.width(70.dp))
             Box(modifier = Modifier
+                .size(150.dp)
                 .clickable {
                     if (rondaActual == myViewModel.rondas) {
                         navController.navigate(Routes.EndScreen.route)
                     } else {
+                        if (respuestaQuatro==preguntaActual.correctAnswer){
+                            myViewModel.aumentarPuntuacion()
+                        }
                         preguntas.remove(preguntaActual)
                         preguntaActual = preguntas.random()
                         rondaActual++
@@ -139,7 +172,10 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                 .border(BorderStroke(4.dp, Color.Blue))
                 .padding(20.dp)
             ){
-                Text(text = "pepe")
+                Text(text = respuestaQuatro,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.align(Alignment.Center),
+                    fontSize = 20.sp)
 
             }
 
