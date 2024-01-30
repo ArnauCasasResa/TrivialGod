@@ -5,6 +5,7 @@ import com.example.ahorcado.Class.Routes
 import android.media.MediaPlayer
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -44,12 +45,18 @@ import java.sql.Time
 @Composable
 fun GameScreen(navController: NavController, myViewModel: GameViewModel){
     val audioWin=MediaPlayer.create(LocalContext.current,R.raw.win)
+    var colorCasillaUno =Color.White
+    var colorCasillaDos =Color.White
+    var colorCasillaTres =Color.White
+    var colorCasillaQuatro =Color.White
+
     var preguntas=when(myViewModel.dificultad){
         "Easy"->myViewModel.preguntasFaciles
         "Normal"-> myViewModel.preguntasNormales
         else->myViewModel.preguntasDificiles
     }
     var tiempo by remember { mutableStateOf(myViewModel.duracion)}
+
     var preguntaActual by remember { mutableStateOf(preguntas.random()) }
     var rondaActual by remember { mutableIntStateOf(1) }
     var respostes by remember{ mutableStateOf(preguntaActual.answers.shuffled())}
@@ -57,6 +64,7 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
     var respuestaDos=respostes[1]
     var respuestaTres=respostes[2]
     var respuestaQuatro=respostes[3]
+
     Column(modifier = Modifier
         .padding(10.dp)
         .fillMaxWidth(),horizontalAlignment = Alignment.CenterHorizontally) {
@@ -74,14 +82,15 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
         Row (Modifier.fillMaxWidth()) {
             Box(modifier = Modifier
                 .size(150.dp)
+                .background(colorCasillaUno)
                 .clickable {
                     if (rondaActual == myViewModel.rondas) {
                         navController.navigate(Routes.EndScreen.route)
                     } else {
                         if (respuestaUno==preguntaActual.correctAnswer){
                             myViewModel.aumentarPuntuacion()
-                        }
-
+                            colorCasillaUno= Color.Green
+                        }else {colorCasillaUno= Color.Red}
                         preguntas.remove(preguntaActual)
                         preguntaActual = preguntas.random()
                         respostes=preguntaActual.answers.shuffled()
@@ -101,13 +110,15 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
             Spacer(modifier = Modifier.width(70.dp))
             Box(modifier = Modifier
                 .size(150.dp)
+                .background(colorCasillaDos)
                 .clickable {
                     if (rondaActual == myViewModel.rondas) {
                         navController.navigate(Routes.EndScreen.route)
                     } else {
                         if (respuestaDos==preguntaActual.correctAnswer){
                             myViewModel.aumentarPuntuacion()
-                        }
+                            colorCasillaDos= Color.Green
+                        }else {colorCasillaDos= Color.Red}
                         preguntas.remove(preguntaActual)
                         preguntaActual = preguntas.random()
                         respostes=preguntaActual.answers.shuffled()
@@ -131,13 +142,15 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
         Row (Modifier.fillMaxWidth()){
             Box(modifier = Modifier
                 .size(150.dp)
+                .background(colorCasillaTres)
                 .clickable {
                     if (rondaActual == myViewModel.rondas) {
                         navController.navigate(Routes.EndScreen.route)
                     } else {
                         if (respuestaTres==preguntaActual.correctAnswer){
                             myViewModel.aumentarPuntuacion()
-                        }
+                            colorCasillaTres= Color.Green
+                        }else {colorCasillaTres= Color.Red}
                         preguntas.remove(preguntaActual)
                         preguntaActual = preguntas.random()
                         respostes=preguntaActual.answers.shuffled()
@@ -158,13 +171,15 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
             Spacer(modifier = Modifier.width(70.dp))
             Box(modifier = Modifier
                 .size(150.dp)
+                .background(colorCasillaQuatro)
                 .clickable {
                     if (rondaActual == myViewModel.rondas) {
                         navController.navigate(Routes.EndScreen.route)
                     } else {
                         if (respuestaQuatro==preguntaActual.correctAnswer){
                             myViewModel.aumentarPuntuacion()
-                        }
+                            colorCasillaQuatro= Color.Green
+                        }else {colorCasillaQuatro= Color.Red}
                         preguntas.remove(preguntaActual)
                         preguntaActual = preguntas.random()
                         respostes=preguntaActual.answers.shuffled()
