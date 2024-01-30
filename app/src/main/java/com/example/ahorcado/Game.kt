@@ -38,17 +38,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.ahorcado.viewModel.GameViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.sql.Time
 
 @SuppressLint("MutableCollectionMutableState")
 @Composable
 fun GameScreen(navController: NavController, myViewModel: GameViewModel){
     val audioWin=MediaPlayer.create(LocalContext.current,R.raw.win)
-    var colorCasillaUno =Color.White
-    var colorCasillaDos =Color.White
-    var colorCasillaTres =Color.White
-    var colorCasillaQuatro =Color.White
+    var colorCasillaUno by remember{ mutableStateOf(Color.Transparent)}
+    var colorCasillaDos by remember{ mutableStateOf(Color.Transparent)}
+    var colorCasillaTres by remember{ mutableStateOf(Color.Transparent)}
+    var colorCasillaQuatro by remember{ mutableStateOf(Color.Transparent)}
 
     var preguntas=when(myViewModel.dificultad){
         "Easy"->myViewModel.preguntasFaciles
@@ -56,7 +59,7 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
         else->myViewModel.preguntasDificiles
     }
     var tiempo by remember { mutableStateOf(myViewModel.duracion)}
-
+    var botonHabilitado by remember{mutableStateOf(true)}
     var preguntaActual by remember { mutableStateOf(preguntas.random()) }
     var rondaActual by remember { mutableIntStateOf(1) }
     var respostes by remember{ mutableStateOf(preguntaActual.answers.shuffled())}
@@ -83,18 +86,26 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
             Box(modifier = Modifier
                 .size(150.dp)
                 .background(colorCasillaUno)
-                .clickable {
+                .clickable(enabled = botonHabilitado) {
                     if (rondaActual == myViewModel.rondas) {
                         navController.navigate(Routes.EndScreen.route)
                     } else {
                         if (respuestaUno==preguntaActual.correctAnswer){
                             myViewModel.aumentarPuntuacion()
                             colorCasillaUno= Color.Green
-                        }else {colorCasillaUno= Color.Red}
+                        }else {
+                            colorCasillaUno= Color.Red
+                        }
+                        botonHabilitado=false
+                        CoroutineScope(Dispatchers.Main).launch {
+                            delay(1000)
+                            preguntaActual = preguntas.random()
+                            respostes=preguntaActual.answers.shuffled()
+                            rondaActual++
+                            colorCasillaUno= Color.Transparent
+                            botonHabilitado=true
+                        }
                         preguntas.remove(preguntaActual)
-                        preguntaActual = preguntas.random()
-                        respostes=preguntaActual.answers.shuffled()
-                        rondaActual++
                     }
                 }
                 .clip(shape = RoundedCornerShape(6.dp))
@@ -111,19 +122,26 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
             Box(modifier = Modifier
                 .size(150.dp)
                 .background(colorCasillaDos)
-                .clickable {
+                .clickable(enabled = botonHabilitado) {
                     if (rondaActual == myViewModel.rondas) {
                         navController.navigate(Routes.EndScreen.route)
                     } else {
-                        if (respuestaDos==preguntaActual.correctAnswer){
+                        if (respuestaDos == preguntaActual.correctAnswer) {
                             myViewModel.aumentarPuntuacion()
-                            colorCasillaDos= Color.Green
-                        }else {colorCasillaDos= Color.Red}
-                        preguntas.remove(preguntaActual)
-                        preguntaActual = preguntas.random()
-                        respostes=preguntaActual.answers.shuffled()
-                        rondaActual++
-
+                            colorCasillaDos = Color.Green
+                        } else {
+                            colorCasillaDos = Color.Red
+                        }
+                        botonHabilitado=false
+                        CoroutineScope(Dispatchers.Main).launch {
+                            delay(1000)
+                            preguntas.remove(preguntaActual)
+                            preguntaActual = preguntas.random()
+                            respostes = preguntaActual.answers.shuffled()
+                            rondaActual++
+                            colorCasillaDos = Color.Transparent
+                            botonHabilitado=true
+                        }
                     }
                 }
                 .clip(shape = RoundedCornerShape(6.dp))
@@ -143,19 +161,26 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
             Box(modifier = Modifier
                 .size(150.dp)
                 .background(colorCasillaTres)
-                .clickable {
+                .clickable(enabled = botonHabilitado) {
                     if (rondaActual == myViewModel.rondas) {
                         navController.navigate(Routes.EndScreen.route)
                     } else {
-                        if (respuestaTres==preguntaActual.correctAnswer){
+                        if (respuestaTres == preguntaActual.correctAnswer) {
                             myViewModel.aumentarPuntuacion()
-                            colorCasillaTres= Color.Green
-                        }else {colorCasillaTres= Color.Red}
-                        preguntas.remove(preguntaActual)
-                        preguntaActual = preguntas.random()
-                        respostes=preguntaActual.answers.shuffled()
-                        rondaActual++
-
+                            colorCasillaTres = Color.Green
+                        } else {
+                            colorCasillaTres = Color.Red
+                        }
+                        botonHabilitado=false
+                        CoroutineScope(Dispatchers.Main).launch {
+                            delay(1000)
+                            preguntas.remove(preguntaActual)
+                            preguntaActual = preguntas.random()
+                            respostes = preguntaActual.answers.shuffled()
+                            rondaActual++
+                            colorCasillaTres = Color.Transparent
+                            botonHabilitado=true
+                        }
                     }
                 }
                 .clip(shape = RoundedCornerShape(6.dp))
@@ -172,19 +197,26 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
             Box(modifier = Modifier
                 .size(150.dp)
                 .background(colorCasillaQuatro)
-                .clickable {
+                .clickable(enabled = botonHabilitado) {
                     if (rondaActual == myViewModel.rondas) {
                         navController.navigate(Routes.EndScreen.route)
                     } else {
-                        if (respuestaQuatro==preguntaActual.correctAnswer){
+                        if (respuestaQuatro == preguntaActual.correctAnswer) {
                             myViewModel.aumentarPuntuacion()
-                            colorCasillaQuatro= Color.Green
-                        }else {colorCasillaQuatro= Color.Red}
+                            colorCasillaQuatro = Color.Green
+                        } else {
+                            colorCasillaQuatro = Color.Red
+                        }
+                        botonHabilitado=false
+                        CoroutineScope(Dispatchers.Main).launch {
+                            delay(1000)
                         preguntas.remove(preguntaActual)
                         preguntaActual = preguntas.random()
-                        respostes=preguntaActual.answers.shuffled()
+                        respostes = preguntaActual.answers.shuffled()
                         rondaActual++
-
+                            colorCasillaQuatro = Color.Transparent
+                            botonHabilitado=true
+                        }
                     }
                 }
                 .clip(shape = RoundedCornerShape(6.dp))
