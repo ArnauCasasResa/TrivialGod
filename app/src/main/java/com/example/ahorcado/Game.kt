@@ -52,7 +52,7 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
     var tiempo by remember { mutableStateOf(myViewModel.duracion)}
     var preguntaActual by remember { mutableStateOf(preguntas.random()) }
     var rondaActual by remember { mutableIntStateOf(1) }
-    var respostes =preguntaActual.answers.shuffled()
+    var respostes by remember{ mutableStateOf(preguntaActual.answers.shuffled())}
     var respuestaUno=respostes[0]
     var respuestaDos=respostes[1]
     var respuestaTres=respostes[2]
@@ -84,6 +84,7 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
 
                         preguntas.remove(preguntaActual)
                         preguntaActual = preguntas.random()
+                        respostes=preguntaActual.answers.shuffled()
                         rondaActual++
                     }
                 }
@@ -109,6 +110,7 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                         }
                         preguntas.remove(preguntaActual)
                         preguntaActual = preguntas.random()
+                        respostes=preguntaActual.answers.shuffled()
                         rondaActual++
 
                     }
@@ -138,6 +140,7 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                         }
                         preguntas.remove(preguntaActual)
                         preguntaActual = preguntas.random()
+                        respostes=preguntaActual.answers.shuffled()
                         rondaActual++
 
                     }
@@ -164,6 +167,7 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                         }
                         preguntas.remove(preguntaActual)
                         preguntaActual = preguntas.random()
+                        respostes=preguntaActual.answers.shuffled()
                         rondaActual++
 
                     }
