@@ -8,6 +8,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,13 +20,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,7 +48,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.sql.Time
 
-@SuppressLint("MutableCollectionMutableState")
+@SuppressLint("MutableCollectionMutableState", "CoroutineCreationDuringComposition")
 @Composable
 fun GameScreen(navController: NavController, myViewModel: GameViewModel){
     val audioWin=MediaPlayer.create(LocalContext.current,R.raw.win)
@@ -90,20 +94,21 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                     if (rondaActual == myViewModel.rondas) {
                         navController.navigate(Routes.EndScreen.route)
                     } else {
-                        if (respuestaUno==preguntaActual.correctAnswer){
+                        if (respuestaUno == preguntaActual.correctAnswer) {
                             myViewModel.aumentarPuntuacion()
-                            colorCasillaUno= Color.Green
-                        }else {
-                            colorCasillaUno= Color.Red
+                            colorCasillaUno = Color.Green
+                        } else {
+                            colorCasillaUno = Color.Red
                         }
-                        botonHabilitado=false
+                        botonHabilitado = false
                         CoroutineScope(Dispatchers.Main).launch {
                             delay(1000)
                             preguntaActual = preguntas.random()
-                            respostes=preguntaActual.answers.shuffled()
+                            respostes = preguntaActual.answers.shuffled()
                             rondaActual++
-                            colorCasillaUno= Color.Transparent
-                            botonHabilitado=true
+                            colorCasillaUno = Color.Transparent
+                            botonHabilitado = true
+                            tiempo=myViewModel.duracion
                         }
                         preguntas.remove(preguntaActual)
                     }
@@ -132,7 +137,7 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                         } else {
                             colorCasillaDos = Color.Red
                         }
-                        botonHabilitado=false
+                        botonHabilitado = false
                         CoroutineScope(Dispatchers.Main).launch {
                             delay(1000)
                             preguntas.remove(preguntaActual)
@@ -140,7 +145,8 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                             respostes = preguntaActual.answers.shuffled()
                             rondaActual++
                             colorCasillaDos = Color.Transparent
-                            botonHabilitado=true
+                            botonHabilitado = true
+                            tiempo=myViewModel.duracion
                         }
                     }
                 }
@@ -171,7 +177,7 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                         } else {
                             colorCasillaTres = Color.Red
                         }
-                        botonHabilitado=false
+                        botonHabilitado = false
                         CoroutineScope(Dispatchers.Main).launch {
                             delay(1000)
                             preguntas.remove(preguntaActual)
@@ -179,7 +185,8 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                             respostes = preguntaActual.answers.shuffled()
                             rondaActual++
                             colorCasillaTres = Color.Transparent
-                            botonHabilitado=true
+                            botonHabilitado = true
+                            tiempo=myViewModel.duracion
                         }
                     }
                 }
@@ -207,7 +214,7 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                         } else {
                             colorCasillaQuatro = Color.Red
                         }
-                        botonHabilitado=false
+                        botonHabilitado = false
                         CoroutineScope(Dispatchers.Main).launch {
                             delay(1000)
                             preguntas.remove(preguntaActual)
@@ -215,7 +222,8 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                             respostes = preguntaActual.answers.shuffled()
                             rondaActual++
                             colorCasillaQuatro = Color.Transparent
-                            botonHabilitado=true
+                            botonHabilitado = true
+                            tiempo=myViewModel.duracion
                         }
                     }
                 }
@@ -231,12 +239,25 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
             }
 
         }
-        Column(modifier = Modifier.fillMaxWidth()) {
-            LinearProgressIndicator(progress = 2f, modifier = Modifier.fillMaxWidth(0.8f))
-            Text(text = "${tiempo.toInt()}")
+        LaunchedEffect(tiempo) {
+            while (tiempo > 0) {
+                delay(1000L)
+                if (botonHabilitado){
+                    tiempo--
+                }
+            }
         }
-
+        Column(Modifier.fillMaxWidth() , horizontalAlignment= Alignment.CenterHorizontally){
+            Text(text = "Time left: ${tiempo.toInt()}")
+            LinearProgressIndicator(progress = tiempo/myViewModel.duracion)
+        }
+        if (tiempo==0f){
+            preguntas.remove(preguntaActual)
+            preguntaActual = preguntas.random()
+            respostes = preguntaActual.answers.shuffled()
+            rondaActual++
+            tiempo=myViewModel.duracion
+        }
     }
 
 }
-

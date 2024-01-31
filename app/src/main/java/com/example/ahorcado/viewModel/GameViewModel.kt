@@ -81,7 +81,7 @@ class GameViewModel:ViewModel() {
             Preguntas.quiz(
                 "¿Cuál es el idioma más hablado del mundo?",
                 mutableListOf("Inglés", "Chino mandarín", "Español", "Hindi"),
-                "Chino mandarín"
+                "Inglés"
             ),
             Preguntas.quiz(
                 "¿En qué continente se encuentra Egipto?",
