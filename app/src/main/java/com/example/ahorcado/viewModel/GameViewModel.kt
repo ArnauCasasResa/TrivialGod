@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.ahorcado.Class.Preguntas
+import com.example.ahorcado.R
 
 @SuppressLint("MutableCollectionMutableState")
 class GameViewModel:ViewModel() {
@@ -30,85 +31,86 @@ class GameViewModel:ViewModel() {
         private set
     var darkmode by  mutableStateOf(false)
         private set
+    var fondo =if (!darkmode){ R.drawable.blanco }else R.drawable.negro
     var preguntasFaciles by mutableStateOf(
         mutableListOf(
             Preguntas.quiz(
-                "¿Cuál es la capital de Francia?",
-                mutableListOf("Madrid", "Roma", "París", "Berlín"),
-                "París",
-
+                "¿Cual es la capital de Francia?",
+                mutableListOf("Madrid", "Roma", "Paris", "Berlin"),
+                "Paris"
             ),
             Preguntas.quiz(
-                "¿Quién escribió el libro 'Don Quijote de la Mancha'?",
-                mutableListOf("Miguel de Cervantes", "Gabriel García Márquez", "William Shakespeare", "Leo Tolstoy"),
+                "¿Quien escribio el libro 'Don Quijote de la Mancha'?",
+                mutableListOf("Miguel de Cervantes", "Gabriel Garcia Marquez", "William Shakespeare", "Leo Tolstoy"),
                 "Miguel de Cervantes"
             ),
             Preguntas.quiz(
-                "¿Cuál es el río más largo del mundo?",
-                mutableListOf("Nilo", "Amazonas", "Mississippi", "Yangtsé"),
+                "¿Cual es el rio mas largo del mundo?",
+                mutableListOf("Nilo", "Amazonas", "Mississippi", "Yangtse"),
                 "Amazonas"
             ),
             Preguntas.quiz(
-                "¿Cuál es el color primario?",
+                "¿Cual es el color primario?",
                 mutableListOf("Rojo", "Verde", "Azul", "Amarillo"),
                 "Rojo"
             ),
             Preguntas.quiz(
-                "¿Cuántos días tiene el mes de febrero en un año bisiesto?",
+                "¿Cuantos dias tiene el mes de febrero en un año bisiesto?",
                 mutableListOf("28", "29", "30", "31"),
                 "29"
             ),
             Preguntas.quiz(
-                "¿Cuál es el planeta más cercano al sol?",
-                mutableListOf("Tierra", "Marte", "Mercurio", "Júpiter"),
+                "¿Cual es el planeta mas cercano al sol?",
+                mutableListOf("Tierra", "Marte", "Mercurio", "Jupiter"),
                 "Mercurio"
             ),
             Preguntas.quiz(
-                "¿Cuál es el animal terrestre más grande?",
-                mutableListOf("Elefante", "Jirafa", "Ballena Azul", "Hipopótamo"),
+                "¿Cual es el animal terrestre mas grande?",
+                mutableListOf("Elefante", "Jirafa", "Ballena Azul", "Hipopotamo"),
                 "Elefante"
             ),
             Preguntas.quiz(
-                "¿Cuál es el océano más grande del mundo?",
-                mutableListOf("Océano Atlántico", "Océano Índico", "Océano Pacífico", "Océano Ártico"),
-                "Océano Pacífico"
+                "¿Cual es el oceano mas grande del mundo?",
+                mutableListOf("Oceano Atlantico", "Oceano Indico", "Oceano Pacifico", "Oceano Artico"),
+                "Oceano Pacifico"
             ),
             Preguntas.quiz(
-                "¿Cuál es el resultado de sumar 2 + 2?",
+                "¿Cual es el resultado de sumar 2 + 2?",
                 mutableListOf("3", "4", "5", "6"),
                 "4"
             ),
             Preguntas.quiz(
-                "¿Cuál es el idioma más hablado del mundo?",
-                mutableListOf("Inglés", "Chino mandarín", "Español", "Hindi"),
-                "Inglés"
+                "¿Cual es el idioma mas hablado del mundo?",
+                mutableListOf("Ingles", "Chino mandarin", "Espanol", "Hindi"),
+                "Ingles"
             ),
             Preguntas.quiz(
-                "¿En qué continente se encuentra Egipto?",
-                mutableListOf("Europa", "Asia", "África", "Oceanía"),
-                "África"
+                "¿En que continente se encuentra Egipto?",
+                mutableListOf("Europa", "Asia", "Africa", "Oceania"),
+                "Africa"
             ),
             Preguntas.quiz(
-                "¿Cuál es el símbolo químico del oro?",
+                "¿Cual es el simbolo quimico del oro?",
                 mutableListOf("Au", "Ag", "Fe", "Cu"),
                 "Au"
             ),
             Preguntas.quiz(
-                "¿Cuál es el país más grande del mundo en términos de superficie?",
-                mutableListOf("Rusia", "China", "Estados Unidos", "Canadá"),
+                "¿Cual es el pais mas grande del mundo en terminos de superficie?",
+                mutableListOf("Rusia", "China", "Estados Unidos", "Canada"),
                 "Rusia"
             ),
             Preguntas.quiz(
-                "¿Cuál es el número atómico del oxígeno?",
+                "¿Cual es el numero atomico del oxigeno?",
                 mutableListOf("6", "7", "8", "9"),
                 "8"
             ),
             Preguntas.quiz(
-                "¿Cuál es el autor de la obra 'Romeo y Julieta'?",
-                mutableListOf("William Shakespeare", "Jorge Luis Borges", "Gabriel García Márquez", "Miguel de Cervantes"),
+                "¿Cual es el autor de la obra 'Romeo y Julieta'?",
+                mutableListOf("William Shakespeare", "Jorge Luis Borges", "Gabriel Garcia Marquez", "Miguel de Cervantes"),
                 "William Shakespeare"
             )
         )
+
     )
         private set
     var preguntasNormales by mutableStateOf(mutableListOf(
@@ -292,5 +294,6 @@ class GameViewModel:ViewModel() {
     }
     fun switchDark(valor:Boolean){
         darkmode=valor
+        fondo =if (!darkmode){ R.drawable.blanco }else R.drawable.negro
     }
 }

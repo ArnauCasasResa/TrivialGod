@@ -54,7 +54,7 @@ fun MenuScreen(navController: NavController){
                 Box(modifier = Modifier
                     .height(80.dp)) {
                     Text(text = titulo[i].toString(),
-                        fontFamily = mario,
+                        fontFamily = marioTitulos,
                         fontSize = 50.sp,
                         color = colorsTrivial[i])
                 }
@@ -69,7 +69,8 @@ fun MenuScreen(navController: NavController){
                 .clickable { navController.navigate(Routes.GameScreen.route) }) {
                 Text(text = "Play",
                     modifier = Modifier.align(Alignment.Center),
-                    color = Color.White)
+                    color = Color.White,
+                    fontFamily = mario)
             }
             Box(modifier = Modifier
                 .height(15.dp)) {
@@ -83,7 +84,8 @@ fun MenuScreen(navController: NavController){
                 }) {
                 Text(text = "Settings",
                     modifier = Modifier.align(Alignment.Center),
-                    color = Color.White)
+                    color = Color.White,
+                    fontFamily = mario)
             }
         }
 

@@ -76,12 +76,14 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
         .padding(10.dp)
         .fillMaxWidth(),horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(modifier = Modifier.height(20.dp))
-        Text(text = "$rondaActual/${ myViewModel.rondas }")
+        Text(text = "$rondaActual/${ myViewModel.rondas }",
+            fontFamily = mario)
         Spacer(modifier = Modifier.height(20.dp))
         Box{
             Text(text = preguntaActual.question,
                 fontSize = 20.sp,
-                textAlign = TextAlign.Center)
+                textAlign = TextAlign.Center,
+                fontFamily = marioTitulos)
         }
         Spacer(modifier = Modifier.height(20.dp))
         Image(painter = painterResource(R.drawable.question), contentDescription ="pregunta" )
@@ -120,7 +122,8 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                 Text(text = respuestaUno,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.align(Alignment.Center),
-                    fontSize = 20.sp)
+                    fontSize = 20.sp,
+                    fontFamily = mario)
 
             }
             Spacer(modifier = Modifier.width(70.dp))
@@ -157,7 +160,8 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                 Text(text = respuestaDos,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.align(Alignment.Center),
-                    fontSize = 20.sp)
+                    fontSize = 20.sp,
+                    fontFamily = mario)
 
             }
 
@@ -197,7 +201,8 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                 Text(text = respuestaTres,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.align(Alignment.Center),
-                    fontSize = 20.sp)
+                    fontSize = 20.sp,
+                    fontFamily = mario)
 
             }
             Spacer(modifier = Modifier.width(70.dp))
@@ -234,7 +239,8 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                 Text(text = respuestaQuatro,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.align(Alignment.Center),
-                    fontSize = 20.sp)
+                    fontSize = 20.sp,
+                    fontFamily = mario)
 
             }
 
@@ -248,7 +254,8 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
             }
         }
         Column(Modifier.fillMaxWidth() , horizontalAlignment= Alignment.CenterHorizontally){
-            Text(text = "Time left: ${tiempo.toInt()}")
+            Text(text = "Time left: ${tiempo.toInt()}",
+                fontFamily = mario)
             LinearProgressIndicator(progress = tiempo/myViewModel.duracion)
         }
         if (tiempo==0f){

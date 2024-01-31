@@ -41,29 +41,33 @@ fun SettingsScreen(navController: NavController, myViewModel: GameViewModel){
         Spacer(modifier = Modifier.height(60.dp))
         Box(modifier =Modifier.height(50.dp)){
             Row {
-                Text(text = "Difficulty", fontSize = 20.sp, modifier = Modifier.padding(7.dp) )
-                OutlinedTextField(
-                    value = myViewModel.dificultad,
-                    onValueChange = { myViewModel.modificarDificultad(it) },
-                    enabled = false,
-                    readOnly = true,
-                    modifier = Modifier
-                        .clickable { expanded = true }
-                        .width(125.dp)
-                )
-                DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false },
-                    modifier = Modifier.width(125.dp)
-                ) {
-                    opciones.forEach { option ->
-                        DropdownMenuItem(text = { Text(text = option) },
-                            modifier = Modifier
-                                .height(40.dp),
-                            onClick = {
-                                expanded = false
-                                myViewModel.modificarDificultad(option)
-                            })
+                Text(text = "Difficulty", fontSize = 20.sp,
+                    modifier = Modifier.padding(7.dp),
+                    fontFamily = mario )
+                Box(){
+                    OutlinedTextField(
+                        value = myViewModel.dificultad,
+                        onValueChange = { myViewModel.modificarDificultad(it) },
+                        enabled = false,
+                        readOnly = true,
+                        modifier = Modifier
+                            .clickable { expanded = true }
+                            .width(125.dp)
+                    )
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false },
+                        modifier = Modifier.width(125.dp)
+                    ) {
+                        opciones.forEach { option ->
+                            DropdownMenuItem(text = { Text(text = option) },
+                                modifier = Modifier
+                                    .height(40.dp),
+                                onClick = {
+                                    expanded = false
+                                    myViewModel.modificarDificultad(option)
+                                })
+                        }
                     }
                 }
             }
@@ -71,7 +75,8 @@ fun SettingsScreen(navController: NavController, myViewModel: GameViewModel){
         Spacer(modifier = Modifier.height(80.dp))
         Box(modifier =Modifier.height(29.dp)){
             Row {
-                Text(text = "Rounds",fontSize = 20.sp)
+                Text(text = "Rounds",fontSize = 20.sp,
+                    fontFamily = mario)
                 RadioButton(selected = myViewModel.statusUno, onClick = { myViewModel.modificarRondas(5)
                     myViewModel.modificarOpcionUno() })
                 Text(text = "5",fontSize = 20.sp)
@@ -86,7 +91,8 @@ fun SettingsScreen(navController: NavController, myViewModel: GameViewModel){
         Spacer(modifier = Modifier.height(80.dp))
         Box(){
             Row {
-                Text(text = "Time per\n  round",fontSize = 20.sp)
+                Text(text = "Time per\n  round",fontSize = 20.sp,
+                    fontFamily = mario)
                 Column {
                     Slider(
                         value = myViewModel.duracion,
@@ -105,7 +111,8 @@ fun SettingsScreen(navController: NavController, myViewModel: GameViewModel){
             val on =if(myViewModel.darkmode)"ON"
                 else "OFF"
             Row {
-                Text(text = "Dark mode ",fontSize = 20.sp)
+                Text(text = "Dark mode ",fontSize = 20.sp,
+                    fontFamily = mario)
                 Switch(checked = myViewModel.darkmode, onCheckedChange = {
                     if (!myViewModel.darkmode) {
                         myViewModel.switchDark(true)
@@ -113,7 +120,8 @@ fun SettingsScreen(navController: NavController, myViewModel: GameViewModel){
                         myViewModel.switchDark(false)
                     }
                 })
-                Text(text =" $on" ,fontSize = 20.sp)
+                Text(text =" $on" ,fontSize = 20.sp,
+                    fontFamily = mario)
             }
         }
         Spacer(modifier = Modifier.height(200.dp))

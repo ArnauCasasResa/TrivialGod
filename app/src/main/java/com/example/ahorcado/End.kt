@@ -53,7 +53,8 @@ fun EndScreen(navController: NavController, myViewModel: GameViewModel){
             Text(
                 text = "Your Score",
                 fontSize = 30.sp,
-                modifier = Modifier.align(Alignment.Center)
+                modifier = Modifier.align(Alignment.Center),
+                fontFamily = marioTitulos
             )
             }
             Box(modifier = Modifier
@@ -62,7 +63,8 @@ fun EndScreen(navController: NavController, myViewModel: GameViewModel){
                 Text(
                     text = "${myViewModel.puntuacion} pts.",
                     fontSize = 20.sp,
-                    modifier = Modifier.align(Alignment.Center)
+                    modifier = Modifier.align(Alignment.Center),
+                    fontFamily = mario
                 )
             }
             Spacer(modifier = Modifier.height(20.dp))
@@ -83,7 +85,8 @@ fun EndScreen(navController: NavController, myViewModel: GameViewModel){
                 Text(
                     text = "Return to menu",
                     modifier = Modifier.align(Alignment.Center),
-                    color = Color.White
+                    color = Color.White,
+                    fontFamily = mario
                 )
             }
         }
@@ -107,7 +110,8 @@ fun Share(texto:String){
         Text(
             text = "Share",
             modifier = Modifier.align(Alignment.Center),
-            color = Color.White
+            color = Color.White,
+            fontFamily = mario
         )
     }
 }
