@@ -210,10 +210,10 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                         botonHabilitado=false
                         CoroutineScope(Dispatchers.Main).launch {
                             delay(1000)
-                        preguntas.remove(preguntaActual)
-                        preguntaActual = preguntas.random()
-                        respostes = preguntaActual.answers.shuffled()
-                        rondaActual++
+                            preguntas.remove(preguntaActual)
+                            preguntaActual = preguntas.random()
+                            respostes = preguntaActual.answers.shuffled()
+                            rondaActual++
                             colorCasillaQuatro = Color.Transparent
                             botonHabilitado=true
                         }
