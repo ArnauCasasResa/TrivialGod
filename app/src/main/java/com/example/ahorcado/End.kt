@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
@@ -86,7 +87,8 @@ fun EndScreen(navController: NavController, myViewModel: GameViewModel){
                     text = "Return to menu",
                     modifier = Modifier.align(Alignment.Center),
                     color = Color.White,
-                    fontFamily = mario
+                    fontFamily = mario,
+                    textAlign = TextAlign.Center,
                 )
             }
         }

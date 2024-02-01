@@ -28,7 +28,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -41,13 +40,6 @@ import com.example.ahorcado.viewModel.GameViewModel
 fun SettingsScreen(navController: NavController, myViewModel: GameViewModel){
     var expanded by remember { mutableStateOf(false) }
     val opciones = listOf("Easy", "Normal", "Dificult")
-    var colores = listOf(Color.Red,Color.Blue,Color.Yellow,Color.Cyan,Color.Green,Color.White,Color.Magenta)
-    val colorStops = colores.mapIndexed { index, _ -> index.toFloat() / (colores.size - 1) }
-
-    val gradientBrush = Brush.linearGradient(
-        colors = colores,
-        colorStops = colorStops
-    )
 
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(20.dp)) {
         Spacer(modifier = Modifier.height(60.dp))
@@ -56,7 +48,7 @@ fun SettingsScreen(navController: NavController, myViewModel: GameViewModel){
                 Text(text = "Difficulty", fontSize = 20.sp,
                     modifier = Modifier.padding(7.dp),
                     fontFamily = mario )
-                Box(){
+                Box{
                     OutlinedTextField(
                         value = myViewModel.dificultad,
                         onValueChange = { myViewModel.modificarDificultad(it) },
@@ -101,7 +93,7 @@ fun SettingsScreen(navController: NavController, myViewModel: GameViewModel){
             }
         }
         Spacer(modifier = Modifier.height(80.dp))
-        Box(){
+        Box{
             Row {
                 Text(text = "Time per\n  round",fontSize = 20.sp,
                     fontFamily = mario)
@@ -112,9 +104,9 @@ fun SettingsScreen(navController: NavController, myViewModel: GameViewModel){
                         valueRange = 10f..60f,
                         steps = 5,
                         colors = SliderDefaults.colors(
-                            activeTrackColor = Color.Yellow,
+                            activeTrackColor = Color(246, 205, 23),
                             inactiveTrackColor = Color.Black,
-                            activeTickColor = Color.Yellow,
+                            activeTickColor = Color(246, 205, 23),
                             inactiveTickColor = Color.Black
                         ),
                         thumb = {
@@ -123,7 +115,6 @@ fun SettingsScreen(navController: NavController, myViewModel: GameViewModel){
                                 contentDescription = null,
                                 Modifier.fillMaxSize(0.15f))
                         }
-
                     )
                     Text(text = "${ myViewModel.duracion.toInt()} s.",
                         modifier = Modifier.align(Alignment.CenterHorizontally))
