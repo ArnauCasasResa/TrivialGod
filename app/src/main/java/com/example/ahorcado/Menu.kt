@@ -23,10 +23,11 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.ahorcado.viewModel.GameViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MenuScreen(navController: NavController){
+fun MenuScreen(navController: NavController,myViewModel: GameViewModel){
     val titulo ="TRIVIAL"
     val colorsTrivial = listOf(
         Color.Red,
@@ -66,7 +67,7 @@ fun MenuScreen(navController: NavController){
                 .background(Color.Gray)
                 .width(125.dp)
                 .padding(1.dp)
-                .clickable { navController.navigate(Routes.GameScreen.route) }) {
+                .clickable { navController.navigate(Routes.GameScreen.route) ;myViewModel.rebootPuntuacio()}) {
                 Text(text = "Play",
                     modifier = Modifier.align(Alignment.Center),
                     color = Color.White,
