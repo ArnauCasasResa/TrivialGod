@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Image(painter = painterResource(myViewModel.fondo), contentDescription = "fondo",contentScale = ContentScale.FillHeight)
+                    Image(painter = painterResource(myViewModel.fondo), contentDescription = "fondo",contentScale = ContentScale.FillBounds)
                     val navigationController = rememberNavController()
                     NavHost(
                         navController = navigationController,

@@ -1,6 +1,7 @@
 package com.example.ahorcado
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import com.example.ahorcado.Class.Routes
 import android.media.MediaPlayer
 import androidx.compose.foundation.BorderStroke
@@ -35,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -62,7 +64,7 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
         "Normal"-> myViewModel.preguntasNormales
         else->myViewModel.preguntasDificiles
     }
-    var tiempo by remember { mutableStateOf(myViewModel.duracion)}
+    var tiempo by rememberSaveable { mutableStateOf(myViewModel.duracion)}
     var botonHabilitado by remember{mutableStateOf(true)}
     var preguntaActual by remember { mutableStateOf(preguntas.random()) }
     var rondaActual by remember { mutableIntStateOf(1) }
@@ -72,199 +74,443 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
     var respuestaTres=respostes[2]
     var respuestaQuatro=respostes[3]
 
-    Column(modifier = Modifier
-        .padding(10.dp)
-        .fillMaxWidth(),horizontalAlignment = Alignment.CenterHorizontally) {
-        Spacer(modifier = Modifier.height(20.dp))
-        Text(text = "$rondaActual/${ myViewModel.rondas }",
-            fontFamily = mario)
-        Spacer(modifier = Modifier.height(20.dp))
-        Box{
-            Text(text = preguntaActual.question,
-                fontSize = 20.sp,
-                textAlign = TextAlign.Center,
-                fontFamily = marioTitulos)
-        }
-        Spacer(modifier = Modifier.height(20.dp))
-        Image(painter = painterResource(R.drawable.question), contentDescription ="pregunta" )
-        Spacer(modifier = Modifier.height(50.dp))
-        Row (Modifier.fillMaxWidth()) {
-            Box(modifier = Modifier
-                .size(150.dp)
-                .background(colorCasillaUno)
-                .clickable(enabled = botonHabilitado) {
-                    if (rondaActual == myViewModel.rondas) {
-                        navController.navigate(Routes.EndScreen.route)
-                    } else {
-                        if (respuestaUno == preguntaActual.correctAnswer) {
-                            myViewModel.aumentarPuntuacion()
-                            colorCasillaUno = Color.Green
-                        } else {
-                            colorCasillaUno = Color.Red
-                        }
-                        botonHabilitado = false
-                        CoroutineScope(Dispatchers.Main).launch {
-                            delay(1000)
-                            preguntaActual = preguntas.random()
-                            respostes = preguntaActual.answers.shuffled()
-                            rondaActual++
-                            colorCasillaUno = Color.Transparent
-                            botonHabilitado = true
-                            tiempo=myViewModel.duracion
-                        }
-                        preguntas.remove(preguntaActual)
-                    }
-                }
-                .clip(shape = RoundedCornerShape(6.dp))
-                .border(BorderStroke(4.dp, Color.Blue))
-                .padding(20.dp)
-            ){
-                Text(text = respuestaUno,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.align(Alignment.Center),
-                    fontSize = 20.sp,
-                    fontFamily = mario)
+    val configuration= LocalConfiguration.current
 
+    if(!(configuration.orientation== Configuration.ORIENTATION_LANDSCAPE)) {
+
+
+        Column(
+            modifier = Modifier
+                .padding(10.dp)
+                .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.height(20.dp))
+            Text(
+                text = "$rondaActual/${myViewModel.rondas}",
+                fontFamily = mario
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            Box {
+                Text(
+                    text = preguntaActual.question,
+                    fontSize = 20.sp,
+                    textAlign = TextAlign.Center,
+                    fontFamily = marioTitulos
+                )
             }
-            Spacer(modifier = Modifier.width(70.dp))
-            Box(modifier = Modifier
-                .size(150.dp)
-                .background(colorCasillaDos)
-                .clickable(enabled = botonHabilitado) {
-                    if (rondaActual == myViewModel.rondas) {
-                        navController.navigate(Routes.EndScreen.route)
-                    } else {
-                        if (respuestaDos == preguntaActual.correctAnswer) {
-                            myViewModel.aumentarPuntuacion()
-                            colorCasillaDos = Color.Green
+            Spacer(modifier = Modifier.height(20.dp))
+            Image(painter = painterResource(R.drawable.question), contentDescription = "pregunta")
+            Spacer(modifier = Modifier.height(50.dp))
+            Row(Modifier.fillMaxWidth()) {
+                Box(modifier = Modifier
+                    .size(150.dp)
+                    .background(colorCasillaUno)
+                    .clickable(enabled = botonHabilitado) {
+
+                        if (rondaActual == myViewModel.rondas) {
+                            navController.navigate(Routes.EndScreen.route)
+                            audioWin.start()
                         } else {
-                            colorCasillaDos = Color.Red
-                        }
-                        botonHabilitado = false
-                        CoroutineScope(Dispatchers.Main).launch {
-                            delay(1000)
+                            if (respuestaUno == preguntaActual.correctAnswer) {
+                                myViewModel.aumentarPuntuacion()
+                                colorCasillaUno = Color.Green
+                            } else {
+                                colorCasillaUno = Color.Red
+                            }
+                            botonHabilitado = false
+                            CoroutineScope(Dispatchers.Main).launch {
+                                delay(1000)
+                                preguntaActual = preguntas.random()
+                                respostes = preguntaActual.answers.shuffled()
+                                rondaActual++
+                                colorCasillaUno = Color.Transparent
+                                botonHabilitado = true
+                                tiempo = myViewModel.duracion
+                            }
                             preguntas.remove(preguntaActual)
-                            preguntaActual = preguntas.random()
-                            respostes = preguntaActual.answers.shuffled()
-                            rondaActual++
-                            colorCasillaDos = Color.Transparent
-                            botonHabilitado = true
-                            tiempo=myViewModel.duracion
                         }
                     }
+                    .clip(shape = RoundedCornerShape(6.dp))
+                    .border(BorderStroke(4.dp, Color.Blue))
+                    .padding(20.dp)
+                ) {
+                    Text(
+                        text = respuestaUno,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.align(Alignment.Center),
+                        fontSize = 20.sp,
+                        fontFamily = mario
+                    )
+
                 }
-                .clip(shape = RoundedCornerShape(6.dp))
-                .border(BorderStroke(4.dp, Color.Blue))
-                .padding(20.dp)
-            ){
-                Text(text = respuestaDos,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.align(Alignment.Center),
-                    fontSize = 20.sp,
-                    fontFamily = mario)
-
-            }
-
-        }
-        Spacer(modifier = Modifier.height(20.dp))
-        Row (Modifier.fillMaxWidth()){
-            Box(modifier = Modifier
-                .size(150.dp)
-                .background(colorCasillaTres)
-                .clickable(enabled = botonHabilitado) {
-                    if (rondaActual == myViewModel.rondas) {
-                        navController.navigate(Routes.EndScreen.route)
-                    } else {
-                        if (respuestaTres == preguntaActual.correctAnswer) {
-                            myViewModel.aumentarPuntuacion()
-                            colorCasillaTres = Color.Green
+                Spacer(modifier = Modifier.width(70.dp))
+                Box(modifier = Modifier
+                    .size(150.dp)
+                    .background(colorCasillaDos)
+                    .clickable(enabled = botonHabilitado) {
+                        if (rondaActual == myViewModel.rondas) {
+                            navController.navigate(Routes.EndScreen.route)
+                            audioWin.start()
                         } else {
-                            colorCasillaTres = Color.Red
-                        }
-                        botonHabilitado = false
-                        CoroutineScope(Dispatchers.Main).launch {
-                            delay(1000)
-                            preguntas.remove(preguntaActual)
-                            preguntaActual = preguntas.random()
-                            respostes = preguntaActual.answers.shuffled()
-                            rondaActual++
-                            colorCasillaTres = Color.Transparent
-                            botonHabilitado = true
-                            tiempo=myViewModel.duracion
+                            if (respuestaDos == preguntaActual.correctAnswer) {
+                                myViewModel.aumentarPuntuacion()
+                                colorCasillaDos = Color.Green
+                            } else {
+                                colorCasillaDos = Color.Red
+                            }
+                            botonHabilitado = false
+                            CoroutineScope(Dispatchers.Main).launch {
+                                delay(1000)
+                                preguntas.remove(preguntaActual)
+                                preguntaActual = preguntas.random()
+                                respostes = preguntaActual.answers.shuffled()
+                                rondaActual++
+                                colorCasillaDos = Color.Transparent
+                                botonHabilitado = true
+                                tiempo = myViewModel.duracion
+                            }
                         }
                     }
+                    .clip(shape = RoundedCornerShape(6.dp))
+                    .border(BorderStroke(4.dp, Color.Blue))
+                    .padding(20.dp)
+                ) {
+                    Text(
+                        text = respuestaDos,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.align(Alignment.Center),
+                        fontSize = 20.sp,
+                        fontFamily = mario
+                    )
+
                 }
-                .clip(shape = RoundedCornerShape(6.dp))
-                .border(BorderStroke(4.dp, Color.Blue))
-                .padding(20.dp)
-            ){
-                Text(text = respuestaTres,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.align(Alignment.Center),
-                    fontSize = 20.sp,
-                    fontFamily = mario)
 
             }
-            Spacer(modifier = Modifier.width(70.dp))
-            Box(modifier = Modifier
-                .size(150.dp)
-                .background(colorCasillaQuatro)
-                .clickable(enabled = botonHabilitado) {
-                    if (rondaActual == myViewModel.rondas) {
-                        navController.navigate(Routes.EndScreen.route)
-                    } else {
-                        if (respuestaQuatro == preguntaActual.correctAnswer) {
-                            myViewModel.aumentarPuntuacion()
-                            colorCasillaQuatro = Color.Green
+            Spacer(modifier = Modifier.height(20.dp))
+            Row(Modifier.fillMaxWidth()) {
+                Box(modifier = Modifier
+                    .size(150.dp)
+                    .background(colorCasillaTres)
+                    .clickable(enabled = botonHabilitado) {
+                        if (rondaActual == myViewModel.rondas) {
+                            navController.navigate(Routes.EndScreen.route)
+                            audioWin.start()
                         } else {
-                            colorCasillaQuatro = Color.Red
-                        }
-                        botonHabilitado = false
-                        CoroutineScope(Dispatchers.Main).launch {
-                            delay(1000)
-                            preguntas.remove(preguntaActual)
-                            preguntaActual = preguntas.random()
-                            respostes = preguntaActual.answers.shuffled()
-                            rondaActual++
-                            colorCasillaQuatro = Color.Transparent
-                            botonHabilitado = true
-                            tiempo=myViewModel.duracion
+                            if (respuestaTres == preguntaActual.correctAnswer) {
+                                myViewModel.aumentarPuntuacion()
+                                colorCasillaTres = Color.Green
+                            } else {
+                                colorCasillaTres = Color.Red
+                            }
+                            botonHabilitado = false
+                            CoroutineScope(Dispatchers.Main).launch {
+                                delay(1000)
+                                preguntas.remove(preguntaActual)
+                                preguntaActual = preguntas.random()
+                                respostes = preguntaActual.answers.shuffled()
+                                rondaActual++
+                                colorCasillaTres = Color.Transparent
+                                botonHabilitado = true
+                                tiempo = myViewModel.duracion
+                            }
                         }
                     }
+                    .clip(shape = RoundedCornerShape(6.dp))
+                    .border(BorderStroke(4.dp, Color.Blue))
+                    .padding(20.dp)
+                ) {
+                    Text(
+                        text = respuestaTres,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.align(Alignment.Center),
+                        fontSize = 20.sp,
+                        fontFamily = mario
+                    )
+
                 }
-                .clip(shape = RoundedCornerShape(6.dp))
-                .border(BorderStroke(4.dp, Color.Blue))
-                .padding(20.dp)
-            ){
-                Text(text = respuestaQuatro,
+                Spacer(modifier = Modifier.width(70.dp))
+                Box(modifier = Modifier
+                    .size(150.dp)
+                    .background(colorCasillaQuatro)
+                    .clickable(enabled = botonHabilitado) {
+                        if (rondaActual == myViewModel.rondas) {
+                            navController.navigate(Routes.EndScreen.route)
+                            audioWin.start()
+                        } else {
+                            if (respuestaQuatro == preguntaActual.correctAnswer) {
+                                myViewModel.aumentarPuntuacion()
+                                colorCasillaQuatro = Color.Green
+                            } else {
+                                colorCasillaQuatro = Color.Red
+                            }
+                            botonHabilitado = false
+                            CoroutineScope(Dispatchers.Main).launch {
+                                delay(1000)
+                                preguntas.remove(preguntaActual)
+                                preguntaActual = preguntas.random()
+                                respostes = preguntaActual.answers.shuffled()
+                                rondaActual++
+                                colorCasillaQuatro = Color.Transparent
+                                botonHabilitado = true
+                                tiempo = myViewModel.duracion
+                            }
+                        }
+                    }
+                    .clip(shape = RoundedCornerShape(6.dp))
+                    .border(BorderStroke(4.dp, Color.Blue))
+                    .padding(20.dp)
+                ) {
+                    Text(
+                        text = respuestaQuatro,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.align(Alignment.Center),
+                        fontSize = 20.sp,
+                        fontFamily = mario
+                    )
+
+                }
+
+            }
+            LaunchedEffect(tiempo) {
+                while (tiempo > 0) {
+                    delay(1000L)
+                    if (botonHabilitado) {
+                        tiempo--
+                    }
+                }
+            }
+            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    text = "Time left: ${tiempo.toInt()}",
+                    fontFamily = mario
+                )
+                LinearProgressIndicator(progress = tiempo / myViewModel.duracion)
+            }
+            if (tiempo == 0f) {
+                preguntas.remove(preguntaActual)
+                preguntaActual = preguntas.random()
+                respostes = preguntaActual.answers.shuffled()
+                rondaActual++
+                tiempo = myViewModel.duracion
+            }
+        }
+    }else{
+        //HORIZONTAL----------------------------------------------------------------------------------------
+        Column(
+            modifier = Modifier
+                .padding(10.dp)
+                .fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.height(20.dp))
+            Text(
+                text = "$rondaActual/${myViewModel.rondas}",
+                fontFamily = mario,
+                fontSize = 20.sp
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            Box {
+                Text(
+                    text = preguntaActual.question,
+                    fontSize = 30.sp,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.align(Alignment.Center),
-                    fontSize = 20.sp,
-                    fontFamily = mario)
-
+                    fontFamily = marioTitulos
+                )
             }
 
-        }
-        LaunchedEffect(tiempo) {
-            while (tiempo > 0) {
-                delay(1000L)
-                if (botonHabilitado){
-                    tiempo--
+
+            Spacer(modifier = Modifier.height(40.dp))
+            Row(Modifier.fillMaxWidth().align(Alignment.CenterHorizontally)) {
+                Spacer(modifier = Modifier.width(60.dp))
+                Box(modifier = Modifier
+                    .size(100.dp)
+                    .background(colorCasillaUno)
+                    .clickable(enabled = botonHabilitado) {
+
+                        if (rondaActual == myViewModel.rondas) {
+                            navController.navigate(Routes.EndScreen.route)
+                            audioWin.start()
+                        } else {
+                            if (respuestaUno == preguntaActual.correctAnswer) {
+                                myViewModel.aumentarPuntuacion()
+                                colorCasillaUno = Color.Green
+                            } else {
+                                colorCasillaUno = Color.Red
+                            }
+                            botonHabilitado = false
+                            CoroutineScope(Dispatchers.Main).launch {
+                                delay(1000)
+                                preguntaActual = preguntas.random()
+                                respostes = preguntaActual.answers.shuffled()
+                                rondaActual++
+                                colorCasillaUno = Color.Transparent
+                                botonHabilitado = true
+                                tiempo = myViewModel.duracion
+                            }
+                            preguntas.remove(preguntaActual)
+                        }
+                    }
+                    .clip(shape = RoundedCornerShape(6.dp))
+                    .border(BorderStroke(4.dp, Color.Blue))
+                    .padding(20.dp)
+                ) {
+                    Text(
+                        text = respuestaUno,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.align(Alignment.Center),
+                        fontSize = 20.sp,
+                        fontFamily = mario
+                    )
+
+                }
+                Spacer(modifier = Modifier.width(50.dp))
+                Box(modifier = Modifier
+                    .size(100.dp)
+                    .background(colorCasillaDos)
+                    .clickable(enabled = botonHabilitado) {
+                        if (rondaActual == myViewModel.rondas) {
+                            navController.navigate(Routes.EndScreen.route)
+                            audioWin.start()
+                        } else {
+                            if (respuestaDos == preguntaActual.correctAnswer) {
+                                myViewModel.aumentarPuntuacion()
+                                colorCasillaDos = Color.Green
+                            } else {
+                                colorCasillaDos = Color.Red
+                            }
+                            botonHabilitado = false
+                            CoroutineScope(Dispatchers.Main).launch {
+                                delay(1000)
+                                preguntas.remove(preguntaActual)
+                                preguntaActual = preguntas.random()
+                                respostes = preguntaActual.answers.shuffled()
+                                rondaActual++
+                                colorCasillaDos = Color.Transparent
+                                botonHabilitado = true
+                                tiempo = myViewModel.duracion
+                            }
+                        }
+                    }
+                    .clip(shape = RoundedCornerShape(6.dp))
+                    .border(BorderStroke(4.dp, Color.Blue))
+                    .padding(20.dp)
+                ) {
+                    Text(
+                        text = respuestaDos,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.align(Alignment.Center),
+                        fontSize = 20.sp,
+                        fontFamily = mario
+                    )
+
+                }
+
+
+            Spacer(modifier = Modifier.height(20.dp))
+                Box(modifier = Modifier
+                    .size(100.dp)
+                    .background(colorCasillaTres)
+                    .clickable(enabled = botonHabilitado) {
+                        if (rondaActual == myViewModel.rondas) {
+                            navController.navigate(Routes.EndScreen.route)
+                            audioWin.start()
+                        } else {
+                            if (respuestaTres == preguntaActual.correctAnswer) {
+                                myViewModel.aumentarPuntuacion()
+                                colorCasillaTres = Color.Green
+                            } else {
+                                colorCasillaTres = Color.Red
+                            }
+                            botonHabilitado = false
+                            CoroutineScope(Dispatchers.Main).launch {
+                                delay(1000)
+                                preguntas.remove(preguntaActual)
+                                preguntaActual = preguntas.random()
+                                respostes = preguntaActual.answers.shuffled()
+                                rondaActual++
+                                colorCasillaTres = Color.Transparent
+                                botonHabilitado = true
+                                tiempo = myViewModel.duracion
+                            }
+                        }
+                    }
+                    .clip(shape = RoundedCornerShape(6.dp))
+                    .border(BorderStroke(4.dp, Color.Blue))
+                    .padding(20.dp)
+                ) {
+                    Text(
+                        text = respuestaTres,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.align(Alignment.Center),
+                        fontSize = 20.sp,
+                        fontFamily = mario
+                    )
+
+                }
+                Spacer(modifier = Modifier.width(50.dp))
+                Box(modifier = Modifier
+                    .size(100.dp)
+                    .background(colorCasillaQuatro)
+                    .clickable(enabled = botonHabilitado) {
+                        if (rondaActual == myViewModel.rondas) {
+                            navController.navigate(Routes.EndScreen.route)
+                            audioWin.start()
+                        } else {
+                            if (respuestaQuatro == preguntaActual.correctAnswer) {
+                                myViewModel.aumentarPuntuacion()
+                                colorCasillaQuatro = Color.Green
+                            } else {
+                                colorCasillaQuatro = Color.Red
+                            }
+                            botonHabilitado = false
+                            CoroutineScope(Dispatchers.Main).launch {
+                                delay(1000)
+                                preguntas.remove(preguntaActual)
+                                preguntaActual = preguntas.random()
+                                respostes = preguntaActual.answers.shuffled()
+                                rondaActual++
+                                colorCasillaQuatro = Color.Transparent
+                                botonHabilitado = true
+                                tiempo = myViewModel.duracion
+                            }
+                        }
+                    }
+                    .clip(shape = RoundedCornerShape(6.dp))
+                    .border(BorderStroke(4.dp, Color.Blue))
+                    .padding(20.dp)
+                ) {
+                    Text(
+                        text = respuestaQuatro,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.align(Alignment.Center),
+                        fontSize = 20.sp,
+                        fontFamily = mario
+                    )
+
+                }
+
+            }
+            LaunchedEffect(tiempo) {
+                while (tiempo > 0) {
+                    delay(1000L)
+                    if (botonHabilitado) {
+                        tiempo--
+                    }
                 }
             }
-        }
-        Column(Modifier.fillMaxWidth() , horizontalAlignment= Alignment.CenterHorizontally){
-            Text(text = "Time left: ${tiempo.toInt()}",
-                fontFamily = mario)
-            LinearProgressIndicator(progress = tiempo/myViewModel.duracion)
-        }
-        if (tiempo==0f){
-            preguntas.remove(preguntaActual)
-            preguntaActual = preguntas.random()
-            respostes = preguntaActual.answers.shuffled()
-            rondaActual++
-            tiempo=myViewModel.duracion
+            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    text = "Time left: ${tiempo.toInt()}",
+                    fontFamily = mario
+                )
+                LinearProgressIndicator(progress = tiempo / myViewModel.duracion)
+            }
+            if (tiempo == 0f) {
+                preguntas.remove(preguntaActual)
+                preguntaActual = preguntas.random()
+                respostes = preguntaActual.answers.shuffled()
+                rondaActual++
+                tiempo = myViewModel.duracion
+            }
         }
     }
-
 }
