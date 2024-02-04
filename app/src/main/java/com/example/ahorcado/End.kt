@@ -82,7 +82,7 @@ fun EndScreen(navController: NavController, myViewModel: GameViewModel){
                 .width(125.dp)
                 .padding(1.dp)
                 .align(Alignment.CenterHorizontally)
-                .clickable { navController.navigate(Routes.MenuScreen.route) }) {
+                .clickable { navController.navigate(Routes.MenuScreen.route);myViewModel.rebootPuntuacio() }) {
                 Text(
                     text = "Return to menu",
                     modifier = Modifier.align(Alignment.Center),

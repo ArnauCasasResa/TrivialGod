@@ -108,8 +108,13 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                     .clickable(enabled = botonHabilitado) {
 
                         if (rondaActual == myViewModel.rondas) {
+                            if (respuestaUno == preguntaActual.correctAnswer) {
+                                myViewModel.aumentarPuntuacion()
+                                colorCasillaUno = Color.Green
+                            } else {
+                                colorCasillaUno = Color.Red
+                            }
                             navController.navigate(Routes.EndScreen.route)
-                            audioWin.start()
                         } else {
                             if (respuestaUno == preguntaActual.correctAnswer) {
                                 myViewModel.aumentarPuntuacion()
@@ -148,9 +153,15 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                     .size(150.dp)
                     .background(colorCasillaDos)
                     .clickable(enabled = botonHabilitado) {
+
                         if (rondaActual == myViewModel.rondas) {
+                            if (respuestaDos == preguntaActual.correctAnswer) {
+                                myViewModel.aumentarPuntuacion()
+                                colorCasillaDos = Color.Green
+                            } else {
+                                colorCasillaDos = Color.Red
+                            }
                             navController.navigate(Routes.EndScreen.route)
-                            audioWin.start()
                         } else {
                             if (respuestaDos == preguntaActual.correctAnswer) {
                                 myViewModel.aumentarPuntuacion()
@@ -193,8 +204,13 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                     .background(colorCasillaTres)
                     .clickable(enabled = botonHabilitado) {
                         if (rondaActual == myViewModel.rondas) {
+                            if (respuestaTres == preguntaActual.correctAnswer) {
+                                myViewModel.aumentarPuntuacion()
+                                colorCasillaTres = Color.Green
+                            } else {
+                                colorCasillaTres = Color.Red
+                            }
                             navController.navigate(Routes.EndScreen.route)
-                            audioWin.start()
                         } else {
                             if (respuestaTres == preguntaActual.correctAnswer) {
                                 myViewModel.aumentarPuntuacion()
@@ -234,8 +250,13 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                     .background(colorCasillaQuatro)
                     .clickable(enabled = botonHabilitado) {
                         if (rondaActual == myViewModel.rondas) {
+                            if (respuestaQuatro == preguntaActual.correctAnswer) {
+                                myViewModel.aumentarPuntuacion()
+                                colorCasillaQuatro = Color.Green
+                            } else {
+                                colorCasillaQuatro = Color.Red
+                            }
                             navController.navigate(Routes.EndScreen.route)
-                            audioWin.start()
                         } else {
                             if (respuestaQuatro == preguntaActual.correctAnswer) {
                                 myViewModel.aumentarPuntuacion()

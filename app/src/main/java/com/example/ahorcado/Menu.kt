@@ -72,7 +72,7 @@ fun MenuScreen(navController: NavController,myViewModel: GameViewModel){
                 .background(Color.Gray)
                 .width(125.dp)
                 .padding(1.dp)
-                .clickable { navController.navigate(Routes.GameScreen.route);myViewModel.rebootPuntuacio() }) {
+                .clickable { navController.navigate(Routes.GameScreen.route) }) {
                 Text(text = "Play",
                     modifier = Modifier.align(Alignment.Center),
                     color = Color.White,

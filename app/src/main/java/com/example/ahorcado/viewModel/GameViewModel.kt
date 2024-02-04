@@ -278,9 +278,9 @@ class GameViewModel:ViewModel() {
     fun aumentarPuntuacion(){
         puntuacion++
     }
-    fun rebootPuntuacio(){{
-        puntuacion=0
-    }}
+    fun rebootPuntuacio(){
+        puntuacion = 0
+    }
     fun modificarDificultad(valor:String){
         dificultad=valor
     }
