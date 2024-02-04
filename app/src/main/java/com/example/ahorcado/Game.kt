@@ -76,7 +76,7 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
 
     val configuration= LocalConfiguration.current
 
-    if(!(configuration.orientation== Configuration.ORIENTATION_LANDSCAPE)) {
+    if(configuration.orientation != Configuration.ORIENTATION_LANDSCAPE) {
 
 
         Column(
@@ -294,8 +294,7 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                 tiempo = myViewModel.duracion
             }
         }
-    }else{
-        //HORIZONTAL----------------------------------------------------------------------------------------
+    }else{//HORIZONTAL----------------------------------------------------------------------------------------
         Column(
             modifier = Modifier
                 .padding(10.dp)
@@ -320,7 +319,7 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
 
             Spacer(modifier = Modifier.height(40.dp))
             Row(Modifier.fillMaxWidth().align(Alignment.CenterHorizontally)) {
-                Spacer(modifier = Modifier.width(60.dp))
+                Spacer(modifier = Modifier.width(35.dp))
                 Box(modifier = Modifier
                     .size(100.dp)
                     .background(colorCasillaUno)
@@ -362,7 +361,7 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                     )
 
                 }
-                Spacer(modifier = Modifier.width(50.dp))
+                Spacer(modifier = Modifier.width(100.dp))
                 Box(modifier = Modifier
                     .size(100.dp)
                     .background(colorCasillaDos)
@@ -405,7 +404,7 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                 }
 
 
-            Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.width(100.dp))
                 Box(modifier = Modifier
                     .size(100.dp)
                     .background(colorCasillaTres)
@@ -446,7 +445,7 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                     )
 
                 }
-                Spacer(modifier = Modifier.width(50.dp))
+                Spacer(modifier = Modifier.width(100.dp))
                 Box(modifier = Modifier
                     .size(100.dp)
                     .background(colorCasillaQuatro)
@@ -489,6 +488,7 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
                 }
 
             }
+            Spacer(modifier = Modifier.height(40.dp))
             LaunchedEffect(tiempo) {
                 while (tiempo > 0) {
                     delay(1000L)
@@ -500,7 +500,8 @@ fun GameScreen(navController: NavController, myViewModel: GameViewModel){
             Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
                     text = "Time left: ${tiempo.toInt()}",
-                    fontFamily = mario
+                    fontFamily = mario,
+                    fontSize = 20.sp
                 )
                 LinearProgressIndicator(progress = tiempo / myViewModel.duracion)
             }

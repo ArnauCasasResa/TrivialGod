@@ -41,17 +41,6 @@ import kotlinx.coroutines.launch
 fun MenuScreen(navController: NavController,myViewModel: GameViewModel){
     val titulo ="TRIVIAL"
     var tituloConstruccion by remember{ mutableStateOf("")}
-    var timeLeft by remember { mutableStateOf(titulo.length)    }
-    var longitudTitulo by remember{ mutableStateOf(titulo.length)}
-    val colorsTrivial = listOf(
-        Color.Red,
-        Color.Green,
-        Color.Yellow,
-        Color.Blue,
-        Color.Magenta,
-        Color.Cyan,
-        Color.Magenta
-    )
 
     Column(horizontalAlignment = Alignment.CenterHorizontally){
         Box(modifier = Modifier
@@ -63,7 +52,7 @@ fun MenuScreen(navController: NavController,myViewModel: GameViewModel){
                 .fillMaxWidth()
                 .size(300.dp)
         )
-        LaunchedEffect(key1 = titulo) {
+        LaunchedEffect(titulo) {
             for (i in titulo.indices){
                 delay(1000L)
                 tituloConstruccion+=titulo[i]
